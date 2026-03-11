@@ -3,9 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestion et transition dans le gymnase</title>
+<title>Gestion et Transition dans le Gymnase | Zone Total Sport</title>
+<!-- SEO Primary -->
+<meta name="description" content="Outil interactif de gestion des transitions pour l'éducation physique au gymnase. Signaux visuels sonores, chronomètre, plan du gymnase et gestion des rôles des élèves.">
+<meta name="keywords" content="gestion gymnase, transitions EPS, éducation physique, signaux visuels, chronomètre transition, plan gymnase, Zone Total Sport, gestion de classe">
+<meta name="author" content="Zone Total Sport">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gym.zonetotalsport.ca">
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gym.zonetotalsport.ca">
+<meta property="og:title" content="Gestion et Transition dans le Gymnase | Zone Total Sport">
+<meta property="og:description" content="Outil interactif pour gérer les transitions en éducation physique. Signaux visuels sonores, chronomètre, plan du gymnase et gestion des rôles des élèves.">
+<meta property="og:image" content="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:locale:alternate" content="en_CA">
+<meta property="og:site_name" content="Zone Total Sport">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gestion et Transition dans le Gymnase | Zone Total Sport">
+<meta name="twitter:description" content="Outil interactif pour gérer les transitions en éducation physique. Signaux visuels, chronomètre et plan du gymnase.">
+<meta name="twitter:image" content="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200">
+<!-- Mobile theme color -->
+<meta name="theme-color" content="#00D6FF">
+<!-- Hreflang -->
+<link rel="alternate" hreflang="fr" href="https://gym.zonetotalsport.ca">
+<link rel="alternate" hreflang="en" href="https://gym.zonetotalsport.ca">
+<!-- Performance: preconnect to external origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://drive.google.com">
+<link rel="preconnect" href="https://lh3.googleusercontent.com">
+<!-- Preload Tailwind CDN to start fetch early -->
+<link rel="preload" href="https://cdn.tailwindcss.com" as="script">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+<!-- Google Fonts: async loading to eliminate render-blocking -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"></noscript>
 <style>
 :root {
 --zts-blue: #00D6FF;
@@ -26,13 +60,17 @@ var(--zts-yellow) 15deg 30deg
 );
 background-attachment: fixed;
 background-position: center;
-font-family: 'Bangers', cursive;
+font-family: 'Bangers', cursive, sans-serif;
 color: var(--zts-black);
 overflow-x: hidden;
 min-height: 100vh;
 }
+/* Mobile: disable background-attachment:fixed for better scroll performance */
+@media (max-width: 767px) {
+  body { background-attachment: scroll; }
+}
 h1, h2, h3, h4, .nav-btn, .timer-big, .fullscreen-label, .comic-font, th, .label-pop, .btn-action, input, p, li, button, .obj-btn {
-font-family: 'Bangers', cursive !important;
+font-family: 'Bangers', cursive, sans-serif !important;
 letter-spacing: 1px;
 line-height: 1.1;
 }
@@ -287,6 +325,36 @@ font-size: 1.5rem;
 flex-shrink: 0;
 }
 </style>
+<!-- Structured Data: JSON-LD for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Gestion et Transition dans le Gymnase",
+  "alternateName": "Gym Management and Transition Tool",
+  "description": "Outil interactif de gestion des transitions pour l'éducation physique au gymnase. Signaux visuels sonores, chronomètre, plan du gymnase et gestion des rôles des élèves.",
+  "url": "https://gym.zonetotalsport.ca",
+  "applicationCategory": "EducationApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": ["fr-CA", "en-CA"],
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Organization",
+    "name": "Zone Total Sport",
+    "url": "https://zonetotalsport.ca"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CAD"
+  },
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Enseignants en éducation physique"
+  }
+}
+</script>
 </head>
 <body class="p-2 sm:p-4 md:p-8">
 <div class="fixed top-2 right-2 sm:top-4 sm:right-4 flex gap-1 sm:gap-2 z-[1001]">
@@ -314,12 +382,12 @@ flex-shrink: 0;
 </div>
 </div>
 <div class="relative w-full max-w-5xl comic-card bg-blue-100 mb-8 md:mb-12 overflow-hidden flex flex-col items-center justify-center border-4 md:border-8 border-black" style="min-height: 40vh;">
-<img src="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200" alt="" class="absolute inset-0 w-full h-full object-cover opacity-80">
+<img src="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200" alt="Gymnase scolaire" class="absolute inset-0 w-full h-full object-cover opacity-80" fetchpriority="high" decoding="async">
 <div class="relative z-10 flex flex-col md:flex-row items-center justify-center p-4 md:p-8 w-full">
 <div class="speech-bubble text-xl md:text-3xl font-bold max-w-md mb-6 md:mb-0 md:mr-8 text-center" data-i18n="landing_speech">
                 Salut ! C'est le chaos ici, non ? Utilise cet outil de gestion des transitions dans mon gymnase pour ramener l'ordre et gérer tes transitions comme un vrai pro !
 </div>
-<img src="https://drive.google.com/thumbnail?id=1awbvfVJkUgmtMQSd6woHCg0HArrpDOlU&sz=w800" alt="" class="h-48 sm:h-64 md:h-80 object-contain filter drop-shadow-xl transform hover:scale-105 transition-transform duration-300">
+<img src="https://drive.google.com/thumbnail?id=1awbvfVJkUgmtMQSd6woHCg0HArrpDOlU&sz=w800" alt="Personnage animateur de gymnase" class="h-48 sm:h-64 md:h-80 object-contain filter drop-shadow-xl transform hover:scale-105 transition-transform duration-300" fetchpriority="high" decoding="async">
 </div>
 </div>
 <button onclick="enterApp()" class="nav-btn !text-white text-2xl md:text-4xl px-8 md:px-12 py-4 md:py-6 shadow-2xl animate-pulse border-4 border-black" style="background-color: var(--zts-dark-blue);" data-i18n="btn_enter">ENTREZ</button>
@@ -353,7 +421,7 @@ flex-shrink: 0;
 <!-- TIME OUT -->
 <div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('timeout')">
 <div class="signal-thumb-container">
-<img src="https://drive.google.com/thumbnail?id=1GumIBnUsa8rGFSZ94JJAH541olzqEfFV&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'TIME OUT')">
+<img src="https://drive.google.com/thumbnail?id=1GumIBnUsa8rGFSZ94JJAH541olzqEfFV&sz=w600" alt="Signal Time Out" class="signal-thumb-mini" loading="lazy" decoding="async" onerror="handleImageError(this, 'TIME OUT')">
 </div>
 <div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
 <h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_timeout">TIME OUT</h3>
@@ -363,7 +431,7 @@ flex-shrink: 0;
 <!-- SILENCE -->
 <div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('halt')">
 <div class="signal-thumb-container">
-<img src="https://drive.google.com/thumbnail?id=1uWQ_cgQqTWyqNy4ge-e0epino9gXsGaT&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'HALTE LÀ')">
+<img src="https://drive.google.com/thumbnail?id=1uWQ_cgQqTWyqNy4ge-e0epino9gXsGaT&sz=w600" alt="Signal Silence" class="signal-thumb-mini" loading="lazy" decoding="async" onerror="handleImageError(this, 'HALTE LÀ')">
 </div>
 <div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
 <h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_halt">HALTE LÀ</h3>
@@ -373,7 +441,7 @@ flex-shrink: 0;
 <!-- RANGEMENT -->
 <div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('cleanup')">
 <div class="signal-thumb-container">
-<img src="https://drive.google.com/thumbnail?id=1_vOKsidF5kTru34eDrb209qMl7OJRbEw&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'RANGEMENT')">
+<img src="https://drive.google.com/thumbnail?id=1_vOKsidF5kTru34eDrb209qMl7OJRbEw&sz=w600" alt="Signal Rangement" class="signal-thumb-mini" loading="lazy" decoding="async" onerror="handleImageError(this, 'RANGEMENT')">
 </div>
 <div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
 <h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_cleanup">RANGEMENT</h3>
@@ -383,7 +451,7 @@ flex-shrink: 0;
 <!-- ASSIS -->
 <div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('meeting_sit')">
 <div class="signal-thumb-container">
-<img src="https://drive.google.com/thumbnail?id=1asbkum2rg-9yGhuFf2nLmcnfABP15uh5&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'ASSIS')">
+<img src="https://drive.google.com/thumbnail?id=1asbkum2rg-9yGhuFf2nLmcnfABP15uh5&sz=w600" alt="Signal Regroupement Assis" class="signal-thumb-mini" loading="lazy" decoding="async" onerror="handleImageError(this, 'ASSIS')">
 </div>
 <div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
 <h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_sit">POINT REPÈRE</h3>
@@ -393,7 +461,7 @@ flex-shrink: 0;
 <!-- DEBOUT -->
 <div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('meeting_stand')">
 <div class="signal-thumb-container">
-<img src="https://drive.google.com/thumbnail?id=15KuAH1aWLxD7VrORn3oosahTzR3-32zc&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'DEBOUT')">
+<img src="https://drive.google.com/thumbnail?id=15KuAH1aWLxD7VrORn3oosahTzR3-32zc&sz=w600" alt="Signal Regroupement Debout" class="signal-thumb-mini" loading="lazy" decoding="async" onerror="handleImageError(this, 'DEBOUT')">
 </div>
 <div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
 <h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_stand">POINT REPÈRE</h3>
@@ -403,7 +471,7 @@ flex-shrink: 0;
 <!-- C'EST PARTI -->
 <div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('gameon')">
 <div class="signal-thumb-container">
-<img src="https://drive.google.com/thumbnail?id=1YaYeL-LFVdSZra8KUz4_Bwd269kW7ZNA&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'C\'EST PARTI')">
+<img src="https://drive.google.com/thumbnail?id=1YaYeL-LFVdSZra8KUz4_Bwd269kW7ZNA&sz=w600" alt="Signal C'est Parti" class="signal-thumb-mini" loading="lazy" decoding="async" onerror="handleImageError(this, 'C\'EST PARTI')">
 </div>
 <div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
 <h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_go">C'EST PARTI</h3>
@@ -454,35 +522,35 @@ flex-shrink: 0;
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">TEXTE</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1aKULZw_8rveLGfkaJOubnXhRKXWtU6my')">
-<img src="https://drive.google.com/thumbnail?id=1aKULZw_8rveLGfkaJOubnXhRKXWtU6my&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1aKULZw_8rveLGfkaJOubnXhRKXWtU6my&sz=w128" alt="Ballon" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">BALLON</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1IEfzSE3V4-lJMuAMyAzSfNAITwDZgCaf')">
-<img src="https://drive.google.com/thumbnail?id=1IEfzSE3V4-lJMuAMyAzSfNAITwDZgCaf&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1IEfzSE3V4-lJMuAMyAzSfNAITwDZgCaf&sz=w128" alt="Cône" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">CÔNE</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1y90MYarn-CLvidAQH9-DS-f15EAFkpLT')">
-<img src="https://drive.google.com/thumbnail?id=1y90MYarn-CLvidAQH9-DS-f15EAFkpLT&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1y90MYarn-CLvidAQH9-DS-f15EAFkpLT&sz=w128" alt="Cerceau" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">CERCEAU</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1LDYA5lDd9uf0Ta3rRZBd5DYgedcym4eH')">
-<img src="https://drive.google.com/thumbnail?id=1LDYA5lDd9uf0Ta3rRZBd5DYgedcym4eH&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1LDYA5lDd9uf0Ta3rRZBd5DYgedcym4eH&sz=w128" alt="Pastille" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">PASTILLE</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1wPLg699etJycrsR-DSASr-pCP1SCKP5G')">
-<img src="https://drive.google.com/thumbnail?id=1wPLg699etJycrsR-DSASr-pCP1SCKP5G&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1wPLg699etJycrsR-DSASr-pCP1SCKP5G&sz=w128" alt="Banc" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">BANC</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1Fd95u9WaUY_NTU8aUPQFOalo5sbGAykR')">
-<img src="https://drive.google.com/thumbnail?id=1Fd95u9WaUY_NTU8aUPQFOalo5sbGAykR&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1Fd95u9WaUY_NTU8aUPQFOalo5sbGAykR&sz=w128" alt="Tapis" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">TAPIS</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1WfyWPy4b47vE6jD-BwVEJ_CnY43-iYyt')">
-<img src="https://drive.google.com/thumbnail?id=1WfyWPy4b47vE6jD-BwVEJ_CnY43-iYyt&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1WfyWPy4b47vE6jD-BwVEJ_CnY43-iYyt&sz=w128" alt="Cible" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">CIBLE</span>
 </button>
 <button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1yT2-PGqKeanJ9vXuWwPPLe-jDJLUAXAh')">
-<img src="https://drive.google.com/thumbnail?id=1yT2-PGqKeanJ9vXuWwPPLe-jDJLUAXAh&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<img src="https://drive.google.com/thumbnail?id=1yT2-PGqKeanJ9vXuWwPPLe-jDJLUAXAh&sz=w128" alt="Autre objet" class="h-14 md:h-20 w-14 md:w-20 object-contain" loading="lazy" decoding="async">
 <span class="text-[10px] md:text-xs mt-1 font-sans font-bold">AUTRE</span>
 </button>
 </div>
