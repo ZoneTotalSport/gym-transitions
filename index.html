@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestion et transition dans le gymnase</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+<style>
+:root {
+--zts-blue: #00D6FF;
+--zts-yellow: #FFFC00;
+--zts-black: #111111;
+--zts-red: #FF2D2D;
+--zts-orange: #FF8C00;
+--zts-pink: #FF69B4;
+--zts-green: #2ecc71;
+--zts-dark-blue: #008eb4;
+}
+body {
+background-color: var(--zts-blue);
+background-image: repeating-conic-gradient(
+from 0deg,
+var(--zts-blue) 0deg 15deg,
+var(--zts-yellow) 15deg 30deg
+);
+background-attachment: fixed;
+background-position: center;
+font-family: 'Bangers', cursive;
+color: var(--zts-black);
+overflow-x: hidden;
+min-height: 100vh;
+}
+h1, h2, h3, h4, .nav-btn, .timer-big, .fullscreen-label, .comic-font, th, .label-pop, .btn-action, input, p, li, button, .obj-btn {
+font-family: 'Bangers', cursive !important;
+letter-spacing: 1px;
+line-height: 1.1;
+}
+.main-title {
+font-size: clamp(2rem, 6vw, 5rem);
+color: var(--zts-black);
+text-transform: uppercase;
+font-style: italic;
+transform: skew(-10deg);
+text-shadow: clamp(3px, 1vw, 6px) clamp(3px, 1vw, 6px) 0px var(--zts-yellow);
+margin-bottom: 0.5rem;
+display: inline-block;
+line-height: 1;
+}
+.comic-card {
+background: white;
+border: clamp(3px, 1vw, 5px) solid var(--zts-blue);
+box-shadow: clamp(6px, 2vw, 12px) clamp(6px, 2vw, 12px) 0px var(--zts-black);
+border-radius: 4px;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+transition: transform 0.1s;
+}
+.nav-btn {
+padding: clamp(0.4rem, 1.5vw, 0.75rem) clamp(0.8rem, 2vw, 1.25rem);
+border: clamp(2px, 0.5vw, 4px) solid var(--zts-black);
+background: white;
+box-shadow: clamp(3px, 1vw, 5px) clamp(3px, 1vw, 5px) 0px var(--zts-black);
+transition: all 0.1s;
+text-transform: uppercase;
+font-size: clamp(1rem, 3vw, 1.3rem);
+cursor: pointer;
+color: var(--zts-black);
+}
+.nav-btn:hover {
+transform: translate(-2px, -2px);
+box-shadow: clamp(4px, 1.5vw, 7px) clamp(4px, 1.5vw, 7px) 0px var(--zts-black);
+background: var(--zts-yellow);
+}
+.nav-btn.active {
+background: var(--zts-yellow);
+transform: translate(3px, 3px);
+box-shadow: 0px 0px 0px var(--zts-black);
+}
+.speech-bubble {
+position: relative;
+background: #ffffff;
+border: clamp(2px, 0.5vw, 4px) solid var(--zts-black);
+border-radius: 10px;
+padding: clamp(10px, 2vw, 20px);
+color: var(--zts-black);
+box-shadow: clamp(3px, 1vw, 6px) clamp(3px, 1vw, 6px) 0px var(--zts-black);
+}
+.speech-bubble:after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 50%;
+width: 0;
+height: 0;
+border: 15px solid transparent;
+border-top-color: #ffffff;
+border-bottom: 0;
+margin-left: -15px;
+margin-bottom: -15px;
+z-index: 2;
+}
+.speech-bubble:before {
+content: '';
+position: absolute;
+bottom: 0;
+left: 50%;
+width: 0;
+height: 0;
+border: 20px solid transparent;
+border-top-color: var(--zts-black);
+border-bottom: 0;
+margin-left: -20px;
+margin-bottom: -20px;
+z-index: 1;
+}
+        @media (min-width: 768px) {
+            .speech-bubble:after {
+left: auto;
+right: -15px;
+bottom: 30%;
+border: 15px solid transparent;
+border-left-color: #ffffff;
+border-right: 0;
+margin: 0;
+}
+.speech-bubble:before {
+left: auto;
+right: -20px;
+bottom: calc(30% - 5px);
+border: 20px solid transparent;
+border-left-color: var(--zts-black);
+border-right: 0;
+margin: 0;
+}
+        }
+.gym-floor {
+position: relative;
+width: 100%;
+height: clamp(300px, 50vh, 600px);
+background: #d4a373;
+background-image:
+linear-gradient(rgba(255,255,255,.1) 2px, transparent 2px),
+linear-gradient(90deg, rgba(255,255,255,.1) 2px, transparent 2px);
+background-size: clamp(25px, 5vw, 50px) clamp(25px, 5vw, 50px);
+border: clamp(4px, 1vw, 8px) solid #5d4037;
+overflow: hidden;
+cursor: crosshair;
+}
+.inventory-bar {
+display: flex;
+flex-wrap: wrap;
+gap: clamp(6px, 1.5vw, 12px);
+padding: clamp(10px, 3vw, 20px);
+background: rgba(255,255,255,0.9);
+border-bottom: clamp(3px, 1vw, 6px) solid var(--zts-black);
+justify-content: center;
+}
+.obj-btn {
+border: clamp(2px, 0.5vw, 3px) solid var(--zts-black);
+background: white;
+padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 12px);
+cursor: pointer;
+font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+transition: 0.1s;
+box-shadow: clamp(2px, 0.5vw, 4px) clamp(2px, 0.5vw, 4px) 0 var(--zts-black);
+}
+.obj-btn.active {
+background: var(--zts-blue);
+color: white;
+transform: translate(2px, 2px);
+box-shadow: 0 0 0 transparent;
+}
+#fullscreen {
+position: fixed;
+top: 0; left: 0; width: 100%; height: 100%;
+display: none; flex-direction: column; align-items: center; justify-content: flex-start;
+z-index: 10000; cursor: pointer;
+padding: 4vh 1rem 1rem 1rem;
+overflow-y: auto;
+}
+#fullscreen.show { display: flex; }
+.fullscreen-img-container {
+flex-shrink: 0;
+background: white;
+padding: clamp(5px, 2vw, 15px);
+border: clamp(4px, 1vw, 8px) solid white;
+box-shadow: clamp(10px, 3vw, 20px) clamp(10px, 3vw, 20px) 0px var(--zts-black);
+margin-bottom: 3vh;
+max-height: 55vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.fullscreen-character {
+max-height: 100%;
+max-width: 90vw;
+object-fit: contain;
+display: block;
+}
+.fullscreen-text-container {
+text-align: center;
+flex-shrink: 0;
+padding-bottom: 1rem;
+}
+.fullscreen-title {
+font-size: clamp(2.5rem, 12vw, 7rem);
+color: white;
+text-transform: uppercase;
+font-style: italic;
+-webkit-text-stroke: clamp(1px, 0.5vw, 3px) var(--zts-black);
+text-shadow: clamp(4px, 1.5vw, 8px) clamp(4px, 1.5vw, 8px) 0px var(--zts-black);
+margin: 0;
+line-height: 0.9;
+}
+.fullscreen-desc {
+font-size: clamp(1.2rem, 5vw, 3rem);
+color: white;
+text-transform: uppercase;
+font-style: italic;
+text-shadow: clamp(2px, 0.5vw, 4px) clamp(2px, 0.5vw, 4px) 0px var(--zts-black);
+margin-top: 1rem;
+}
+.signal-thumb-container {
+width: 100%;
+height: clamp(180px, 40vw, 300px);
+background-color: #ffffff;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: clamp(10px, 3vw, 20px);
+}
+.signal-thumb-mini {
+max-width: 100%;
+max-height: 100%;
+object-fit: contain;
+}
+.timer-big {
+font-size: clamp(5rem, 20vw, 12rem);
+text-shadow: clamp(4px, 1.5vw, 10px) clamp(4px, 1.5vw, 10px) 0px rgba(0,0,0,0.1);
+color: var(--zts-black);
+}
+.img-fallback {
+width: 100%; height: clamp(180px, 40vw, 300px);
+display: flex; align-items: center; justify-content: center;
+font-size: clamp(1.5rem, 4vw, 2.5rem); background: #eee;
+text-align: center;
+}
+@keyframes popIn {
+0% { transform: scale(0.8); opacity: 0; }
+100% { transform: scale(1); opacity: 1; }
+}
+.label-pop {
+position: absolute;
+background: var(--zts-yellow);
+border: clamp(2px, 0.5vw, 3px) solid var(--zts-black);
+padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 15px);
+box-shadow: clamp(3px, 1vw, 6px) clamp(3px, 1vw, 6px) 0px var(--zts-black);
+cursor: move;
+min-width: 60px;
+transform: translate(-50%, -50%);
+z-index: 50;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.label-pop input {
+background: transparent; border: none; width: 100%; font-size: clamp(1rem, 3vw, 1.4rem); text-align: center; outline: none;
+}
+</style>
+</head>
+<body class="p-2 sm:p-4 md:p-8">
+<div class="fixed top-2 right-2 sm:top-4 sm:right-4 flex gap-1 sm:gap-2 z-[1001]">
+<button onclick="changeLang('fr')" id="lang-fr" class="nav-btn !p-1 sm:!p-2 !text-xs sm:!text-sm active bg-yellow-300">FR</button>
+<button onclick="changeLang('en')" id="lang-en" class="nav-btn !p-1 sm:!p-2 !text-xs sm:!text-sm">EN</button>
+</div>
+<!-- MODALE INFO PÉDAGO -->
+<div id="info-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[10000] items-center justify-center p-4 backdrop-blur-sm">
+<div class="comic-card bg-white max-w-3xl w-full p-6 md:p-10 relative animate-[popIn_0.3s_ease-out]">
+<button onclick="closeInfoModal()" class="absolute -top-4 -right-4 bg-red-600 text-white w-10 h-10 md:w-12 md:h-12 rounded-full border-4 border-black font-bold text-xl md:text-2xl flex items-center justify-center">X</button>
+<h2 id="info-modal-title" class="text-3xl md:text-5xl text-blue-500 mb-6 uppercase border-b-4 border-yellow-400 pb-2">TITRE</h2>
+<div class="flex flex-col sm:flex-row gap-6 md:gap-8 items-center">
+<div id="info-modal-icon" class="text-7xl md:text-8xl drop-shadow-lg">💡</div>
+<p id="info-modal-desc" class="text-lg md:text-2xl text-gray-800 leading-snug font-sans font-bold"></p>
+</div>
+<button onclick="closeInfoModal()" class="mt-8 w-full nav-btn bg-green-400 !text-white text-2xl" data-i18n="btn_understood">J'AI COMPRIS !</button>
+</div>
+</div>
+<!-- PAGE D'ACCUEIL -->
+<div id="landing-page" class="min-h-screen flex flex-col items-center justify-center pt-10 pb-10 px-2 sm:px-4">
+<div class="text-center flex flex-col items-center px-2 mb-6 md:mb-10">
+<h1 class="main-title" data-i18n="title">GESTION ET TRANSITION DANS LE GYMNASE</h1>
+<div class="block mt-1 md:mt-2">
+<h2 class="bg-black text-white font-bold uppercase text-xs sm:text-sm md:text-xl tracking-widest px-4 md:px-8 py-2 md:py-3 inline-block border-2 md:border-4 border-white shadow-xl" data-i18n="subtitle">OUTIL DE GESTION DES TRANSITIONS</h2>
+</div>
+</div>
+<div class="relative w-full max-w-5xl comic-card bg-blue-100 mb-8 md:mb-12 overflow-hidden flex flex-col items-center justify-center border-4 md:border-8 border-black" style="min-height: 40vh;">
+<!-- Fond Gymnase personnalisé -->
+<img src="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200" alt="" class="absolute inset-0 w-full h-full object-cover opacity-80">
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-center p-4 md:p-8 w-full">
+<div class="speech-bubble text-xl md:text-3xl font-bold max-w-md mb-6 md:mb-0 md:mr-8 text-center" data-i18n="landing_speech">
+                Salut ! C'est le chaos ici, non ? Utilise cet outil de gestion des transitions dans mon gymnase pour ramener l'ordre et gérer tes transitions comme un vrai pro !
+</div>
+<!-- Bûcheron d'accueil -->
+<img src="https://drive.google.com/thumbnail?id=1awbvfVJkUgmtMQSd6woHCg0HArrpDOlU&sz=w800" alt="" class="h-48 sm:h-64 md:h-80 object-contain filter drop-shadow-xl transform hover:scale-105 transition-transform duration-300">
+</div>
+</div>
+<button onclick="enterApp()" class="nav-btn !text-white text-2xl md:text-4xl px-8 md:px-12 py-4 md:py-6 shadow-2xl animate-pulse border-4 border-black" style="background-color: var(--zts-dark-blue);" data-i18n="btn_enter">ENTREZ</button>
+</div>
+<!-- APPLICATION PRINCIPALE -->
+<div id="main-app" class="hidden max-w-7xl mx-auto pt-10 sm:pt-4 md:pt-0">
+<header class="flex flex-col items-center justify-center mb-8 md:mb-16 gap-4 md:gap-8">
+<div class="text-center flex flex-col items-center px-2">
+<h1 class="main-title" data-i18n="title">GESTION ET TRANSITION DANS LE GYMNASE</h1>
+<div class="block mt-1 md:mt-2">
+<h2 class="bg-black text-white font-bold uppercase text-xs sm:text-sm md:text-lg tracking-widest px-4 md:px-8 py-1 md:py-2 inline-block border-2 md:border-4 border-white shadow-xl" data-i18n="subtitle">OUTIL DE GESTION DES TRANSITIONS</h2>
+</div>
+</div>
+<nav class="flex flex-wrap justify-center gap-2 md:gap-4 px-2">
+<button onclick="goHome()" class="nav-btn bg-gray-100" data-i18n="nav_home">ACCUEIL</button>
+<button onclick="switchTab('signals')" id="tab-signals" class="nav-btn active" data-i18n="nav_signals">SIGNAUX</button>
+<button onclick="switchTab('timer')" id="tab-timer" class="nav-btn" data-i18n="nav_timer">CHRONO</button>
+<button onclick="switchTab('logistics')" id="tab-logistics" class="nav-btn" data-i18n="nav_zones">ZONES</button>
+<button onclick="switchTab('captains')" id="tab-captains" class="nav-btn" data-i18n="nav_staff">STAFF</button>
+<button onclick="switchTab('guide')" id="tab-guide" class="nav-btn bg-pink-400 !text-white" data-i18n="nav_guide">GUIDE</button>
+</nav>
+</header>
+<main>
+<!-- SIGNAUX -->
+<div id="section-signals" class="px-2">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-3xl md:text-5xl uppercase text-blue-500" data-i18n="nav_signals">SIGNAUX VISUELS</h2>
+<button onclick="showInfo('signals')" class="nav-btn bg-yellow-300 !p-2 !px-4 flex items-center gap-2 transform hover:scale-105">💡 <span data-i18n="btn_info">INFO PÉDAGO</span></button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10">
+<!-- TIME OUT -->
+<div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('timeout')">
+<div class="signal-thumb-container">
+<img src="https://drive.google.com/thumbnail?id=1GumIBnUsa8rGFSZ94JJAH541olzqEfFV&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'TIME OUT')">
+</div>
+<div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
+<h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_timeout">TIME OUT</h3>
+<h3 class="text-2xl md:text-3xl uppercase text-blue-500" data-i18n="sig_timeout">TIME OUT</h3>
+</div>
+</div>
+<!-- SILENCE -->
+<div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('halt')">
+<div class="signal-thumb-container">
+<img src="https://drive.google.com/thumbnail?id=1uWQ_cgQqTWyqNy4ge-e0epino9gXsGaT&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'HALTE LÀ')">
+</div>
+<div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
+<h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_halt">HALTE LÀ</h3>
+<h3 class="text-2xl md:text-3xl uppercase text-black" data-i18n="sig_halt">SILENCE</h3>
+</div>
+</div>
+<!-- RANGEMENT -->
+<div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('cleanup')">
+<div class="signal-thumb-container">
+<img src="https://drive.google.com/thumbnail?id=1_vOKsidF5kTru34eDrb209qMl7OJRbEw&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'RANGEMENT')">
+</div>
+<div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
+<h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_cleanup">RANGEMENT</h3>
+<h3 class="text-2xl md:text-3xl uppercase text-yellow-600" data-i18n="sig_cleanup">RANGEZ</h3>
+</div>
+</div>
+<!-- ASSIS -->
+<div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('meeting_sit')">
+<div class="signal-thumb-container">
+<img src="https://drive.google.com/thumbnail?id=1asbkum2rg-9yGhuFf2nLmcnfABP15uh5&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'ASSIS')">
+</div>
+<div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
+<h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_sit">POINT REPÈRE</h3>
+<h3 class="text-2xl md:text-3xl uppercase text-blue-600" data-i18n="sig_sit">ASSIS</h3>
+</div>
+</div>
+<!-- DEBOUT -->
+<div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('meeting_stand')">
+<div class="signal-thumb-container">
+<img src="https://drive.google.com/thumbnail?id=15KuAH1aWLxD7VrORn3oosahTzR3-32zc&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'DEBOUT')">
+</div>
+<div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
+<h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_stand">POINT REPÈRE</h3>
+<h3 class="text-2xl md:text-3xl uppercase text-blue-600" data-i18n="sig_stand">DEBOUT</h3>
+</div>
+</div>
+<!-- C'EST PARTI -->
+<div class="signal-card comic-card text-center cursor-pointer hover:scale-105" onclick="triggerFullscreen('gameon')">
+<div class="signal-thumb-container">
+<img src="https://drive.google.com/thumbnail?id=1YaYeL-LFVdSZra8KUz4_Bwd269kW7ZNA&sz=w600" class="signal-thumb-mini" onerror="handleImageError(this, 'C\'EST PARTI')">
+</div>
+<div class="py-4 md:py-6 border-t-2 md:border-t-4 border-blue-500">
+<h3 class="text-sm md:text-lg text-gray-500 uppercase mb-2" data-i18n="sig_label_go">C'EST PARTI</h3>
+<h3 class="text-2xl md:text-3xl uppercase text-green-600" data-i18n="sig_go">GO !</h3>
+</div>
+</div>
+</div>
+</div>
+<!-- TIMER SECTION -->
+<div id="section-timer" class="hidden px-2">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-3xl md:text-5xl uppercase text-blue-500" data-i18n="timer_title">CHRONO TRANSITION</h2>
+<button onclick="showInfo('timer')" class="nav-btn bg-yellow-300 !p-2 !px-4 flex items-center gap-2 transform hover:scale-105">💡 <span data-i18n="btn_info">INFO PÉDAGO</span></button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-10">
+<div class="comic-card lg:col-span-2 flex flex-col items-center justify-center py-8 md:py-16">
+<div id="timer-display" class="timer-big mb-6 md:mb-10">01:15</div>
+<div class="flex flex-wrap justify-center gap-3 md:gap-6 mb-8 md:mb-12 px-2">
+<button onclick="setTimer(45)" class="nav-btn bg-blue-100">45S</button>
+<button onclick="setTimer(75)" class="nav-btn bg-gray-100">75S</button>
+<input type="number" id="custom-sec" placeholder="SEC" class="w-20 md:w-32 p-2 md:p-3 border-2 md:border-4 border-black font-bold text-center text-lg md:text-2xl outline-none shadow-md">
+<button onclick="setTimer(document.getElementById('custom-sec').value)" class="nav-btn bg-yellow-300">OK</button>
+</div>
+<div class="flex gap-4 md:gap-8">
+<button id="start-btn" onclick="startTimer()" class="nav-btn bg-green-500 !text-white">DÉPART</button>
+<button id="stop-btn" onclick="stopTimer()" class="nav-btn bg-red-500 !text-white">ARRÊT</button>
+</div>
+</div>
+<div class="comic-card bg-yellow-50 p-6 md:p-8">
+<h2 class="text-2xl md:text-4xl mb-6 md:mb-8 text-center text-blue-500" data-i18n="records_title">🏆 RECORDS</h2>
+<ul class="space-y-3 md:space-y-4 text-lg md:text-2xl" id="records-list">
+<li class="flex justify-between border-b-2 md:border-b-4 border-black pb-2"><span data-i18n="rec_default">RANGEMENT</span> <span>42S</span></li>
+</ul>
+<button onclick="addRecord()" class="mt-6 md:mt-8 w-full nav-btn bg-blue-500 !text-white" data-i18n="btn_new_rec">+ NOUVEAU</button>
+</div>
+</div>
+</div>
+<!-- ZONES SECTION -->
+<div id="section-logistics" class="hidden px-2">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-3xl md:text-5xl uppercase text-blue-500" data-i18n="map_title">📍 PLAN DU GYMNASE</h2>
+<button onclick="showInfo('logistics')" class="nav-btn bg-yellow-300 !p-2 !px-4 flex items-center gap-2 transform hover:scale-105">💡 <span data-i18n="btn_info">INFO PÉDAGO</span></button>
+</div>
+<div class="comic-card">
+<div class="inventory-bar" id="inventory">
+<button class="obj-btn active" onclick="setTool('text')" id="tool-text">📝 TEXTE</button>
+<button class="obj-btn" onclick="setTool('ballon')">⚽ Ballon</button>
+<button class="obj-btn" onclick="setTool('cone')">🔼 Cône</button>
+<button class="obj-btn" onclick="setTool('cerceau')">⭕ Cerceau</button>
+<button class="obj-btn" onclick="setTool('pastille')">🟡 Pastille</button>
+</div>
+<div class="p-4 md:p-8">
+<div class="flex justify-end mb-4">
+<button onclick="clearZones()" class="nav-btn bg-red-500 !text-white !text-xs" data-i18n="btn_clear">EFFACER TOUT</button>
+</div>
+<div class="gym-floor" id="gym-floor" onclick="handleFloorClick(event)"></div>
+</div>
+</div>
+</div>
+<!-- STAFF SECTION -->
+<div id="section-captains" class="hidden px-2">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-3xl md:text-5xl uppercase text-blue-500" data-i18n="staff_title">🧢 STAFF DE LA SEMAINE</h2>
+<button onclick="showInfo('captains')" class="nav-btn bg-yellow-300 !p-2 !px-4 flex items-center gap-2 transform hover:scale-105">💡 <span data-i18n="btn_info">INFO PÉDAGO</span></button>
+</div>
+<div class="comic-card p-6 md:p-10">
+<div class="flex justify-end mb-6">
+<button onclick="addRole()" class="nav-btn bg-blue-500 !text-white">+ AJOUTER RÔLE</button>
+</div>
+<div id="roles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10"></div>
+</div>
+</div>
+</main>
+<!-- FULLSCREEN MODE -->
+<div id="fullscreen" onclick="hideFullscreen()">
+<div class="fullscreen-img-container">
+<img id="fs-img-char" src="" class="fullscreen-character" onerror="handleFullscreenError(this)">
+</div>
+<div class="fullscreen-text-container">
+<h2 id="fs-title" class="fullscreen-title"></h2>
+<p id="fs-desc" class="fullscreen-desc"></p>
+<button id="fs-play-btn" onclick="event.stopPropagation(); playSignalAudio();" class="nav-btn bg-green-400 !text-white text-xl md:text-3xl px-8 py-3 mt-6 border-4 border-black shadow-xl" data-i18n="btn_start_signal">DÉBUTER</button>
+</div>
+<p class="text-white font-bold opacity-30 uppercase text-base mt-auto pb-4" data-i18n="fs_close">CLIQUEZ POUR FERMER</p>
+</div>
+</div>
+<!-- LECTEURS AUDIO -->
+<audio id="audio-end" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+<audio id="signal-audio"></audio>
+<script>
+// --- GESTION DES ERREURS ---
+function handleImageError(img, text) {
+const container = img.parentElement;
+        img.classList.add('hidden');
+const fallback = document.createElement('div');
+        fallback.className = 'img-fallback';
+        fallback.textContent = text;
+        container.insertBefore(fallback, img);
+}
+function handleFullscreenError(img) {
+        img.classList.add('hidden');
+}
+let currentLang = 'fr';
+let currentTool = 'text';
+const infoData = {
+        signals: { icon: '🛑', titleFr: 'Signaux Visuels', descFr: "Captez l'attention instantanément sans crier. Les repères visuels sont essentiels pour sécuriser les élèves.", titleEn: 'Visual Signals', descEn: "Grab attention without shouting. Visual cues are essential for student security." },
+        timer: { icon: '⏱️', titleFr: 'Le Pouvoir du Chrono', descFr: "Le rangement devient un défi ludique ! Gagnez du temps moteur en transformant les transitions en jeu coopératif.", titleEn: 'Timer Power', descEn: "Turn cleanup into a game! Save active time by making transitions cooperative." },
+        logistics: { icon: '🗺️', titleFr: 'Stratégie des Zones', descFr: "Définissez visuellement l'espace pour éviter l'éparpillement. Savoir OÙ aller calme le chaos.", titleEn: 'Zone Strategy', descEn: "Define space visually to prevent scattering. Knowing WHERE to go calms the chaos." },
+        captains: { icon: '🦸‍♂️', titleFr: 'Responsabilisation', descFr: "Déléguez le leadership aux élèves. Les capitaines gèrent le matériel et le silence pendant que vous enseignez.", titleEn: 'Empowerment', descEn: "Delegate leadership to students. Captains manage gear and silence while you teach." }
+};
+
+const signalData = {
+        timeout:      { id: '1GumIBnUsa8rGFSZ94JJAH541olzqEfFV', fr: ['TIME OUT !', 'On s\'arrête ! Temps mort !'],       en: ['TIME OUT!',    'Stop! Time out!'],         bg: 'var(--zts-red)',    sound: 'timeout.mp3' },
+        halt:         { id: '1uWQ_cgQqTWyqNy4ge-e0epino9gXsGaT', fr: ['SILENCE',    'Écoute attentive demandée !'],       en: ['SILENCE',      'Listen up!'],              bg: 'var(--zts-black)', sound: 'stop.mp3' },
+        cleanup:      { id: '1_vOKsidF5kTru34eDrb209qMl7OJRbEw', fr: ['RANGEMENT',  'Rangez le matériel dans les bacs !'], en: ['CLEANUP',      'Put equipment in the bins!'], bg: 'var(--zts-yellow)', sound: 'ranger.mp3' },
+        meeting_sit:  { id: '1asbkum2rg-9yGhuFf2nLmcnfABP15uh5', fr: ['POINT REPÈRE','Regroupement assis !'],              en: ['MEETING POINT','Sit down!'],              bg: 'var(--zts-blue)',  sound: 'assis.mp3' },
+        meeting_stand:{ id: '15KuAH1aWLxD7VrORn3oosahTzR3-32zc', fr: ['POINT REPÈRE','Regroupement debout !'],             en: ['MEETING POINT','Stand up!'],              bg: 'var(--zts-blue)',  sound: 'cocus.mp3' },
+        gameon:       { id: '1YaYeL-LFVdSZra8KUz4_Bwd269kW7ZNA', fr: ['C\'EST PARTI !','Au jeu ! Tout le monde en place !'],en: ['GAME ON!',    'Go! Everyone in place!'], bg: 'var(--zts-green)', sound: 'gameon.mp3' }
+};
+
+function enterApp() { document.getElementById('landing-page').classList.add('hidden'); document.getElementById('main-app').classList.remove('hidden'); }
+function goHome() { document.getElementById('main-app').classList.add('hidden'); document.getElementById('landing-page').classList.remove('hidden'); }
+function triggerFullscreen(key) {
+const data = signalData[key];
+const fs = document.getElementById('fullscreen');
+const img = document.getElementById('fs-img-char');
+        fs.style.backgroundColor = data.bg === 'var(--zts-black)' ? '#111111' : data.bg;
+        img.src = `https://drive.google.com/thumbnail?id=${data.id}&sz=w1200`;
+        img.classList.remove('hidden');
+        document.getElementById('fs-title').innerText = data[currentLang][0];
+        document.getElementById('fs-desc').innerText = data[currentLang][1];
+        document.getElementById('signal-audio').src = data.sound;
+        fs.classList.add('show');
+}
+function playSignalAudio() {
+        document.getElementById('signal-audio').play().catch(e => {
+            console.warn("Lecture audio bloquée ou fichier non trouvé :", e);
+        });
+}
+function hideFullscreen() {
+        document.getElementById('fullscreen').classList.remove('show');
+const audio = document.getElementById('signal-audio');
+        audio.pause();
+if(audio.readyState > 0) audio.currentTime = 0;
+}
+function showInfo(key) {
+const data = infoData[key];
+        document.getElementById('info-modal-title').innerText = currentLang === 'fr' ? data.titleFr : data.titleEn;
+        document.getElementById('info-modal-desc').innerText = currentLang === 'fr' ? data.descFr : data.descEn;
+        document.getElementById('info-modal-icon').innerText = data.icon;
+        document.getElementById('info-modal').classList.replace('hidden', 'flex');
+}
+function closeInfoModal() { document.getElementById('info-modal').classList.replace('flex', 'hidden'); }
+function switchTab(id) {
+['signals', 'timer', 'logistics', 'captains'].forEach(t => {
+            document.getElementById(`section-${t}`).classList.add('hidden');
+            document.getElementById(`tab-${t}`).classList.remove('active');
+});
+        document.getElementById(`section-${id}`).classList.remove('hidden');
+        document.getElementById(`tab-${id}`).classList.add('active');
+}
+let timerInterval, timeRemaining = 75;
+function updateTimerDisplay() {
+const m = Math.floor(timeRemaining / 60), s = timeRemaining % 60;
+        document.getElementById('timer-display').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+function setTimer(sec) { timeRemaining = parseInt(sec); updateTimerDisplay(); }
+function startTimer() {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+if(timeRemaining > 0) { timeRemaining--; updateTimerDisplay(); }
+else { clearInterval(timerInterval); document.getElementById('audio-end').play().catch(e=>{}); }
+}, 1000);
+}
+function stopTimer() { clearInterval(timerInterval); }
+function changeLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (i18n[lang][key]) el.textContent = i18n[lang][key];
+});
+        document.getElementById('lang-fr').classList.toggle('active', lang==='fr');
+        document.getElementById('lang-en').classList.toggle('active', lang==='en');
+}
+const i18n = {
+        fr: {
+            title: "GESTION ET TRANSITION DANS LE GYMNASE",
+            subtitle: "OUTIL DE GESTION DES TRANSITIONS",
+            landing_speech: "Salut ! C'est le chaos ici, non ? Utilise cet outil de gestion des transitions dans mon gymnase pour ramener l'ordre et gérer tes transitions comme un vrai pro !",
+            nav_home: "ACCUEIL", nav_signals: "SIGNAUX", nav_timer: "CHRONO", nav_zones: "ZONES", nav_staff: "STAFF",
+            btn_enter: "ENTREZ", btn_understood: "J'AI COMPRIS !", btn_info: "INFO PÉDAGO", btn_start_signal: "DÉBUTER",
+            sig_label_timeout: "TIME OUT", sig_timeout: "TIME OUT", sig_label_halt: "HALTE LÀ", sig_halt: "SILENCE",
+            sig_label_cleanup: "RANGEMENT", sig_cleanup: "RANGEZ", sig_label_sit: "POINT REPÈRE", sig_sit: "ASSIS",
+            sig_label_stand: "POINT REPÈRE", sig_stand: "DEBOUT", sig_label_go: "C'EST PARTI", sig_go: "GO !",
+            timer_title: "CHRONO TRANSITION", records_title: "🏆 RECORDS", rec_default: "RANGEMENT", btn_new_rec: "+ NOUVEAU",
+            map_title: "📍 PLAN DU GYMNASE", btn_clear: "EFFACER TOUT", staff_title: "Capitaines de zone", nav_guide: "GUIDE", fs_close: "CLIQUEZ POUR FERMER"
+        },
+        en: {
+            title: "GYM MANAGEMENT AND TRANSITION",
+            subtitle: "TRANSITION MANAGEMENT TOOL",
+            landing_speech: "Hey! Looks like chaos in here, right? Use this tool to bring order and manage transitions like a real pro!",
+            nav_home: "HOME", nav_signals: "SIGNALS", nav_timer: "TIMER", nav_zones: "ZONES", nav_staff: "STAFF",
+            btn_enter: "ENTER", btn_understood: "GOT IT!", btn_info: "PEDAGOGY INFO", btn_start_signal: "START",
+            sig_label_timeout: "TIME OUT", sig_timeout: "TIME OUT", sig_label_halt: "HALT", sig_halt: "SILENCE",
+            sig_label_cleanup: "CLEANUP", sig_cleanup: "CLEANUP", sig_label_sit: "MEETING POINT", sig_sit: "SIT DOWN",
+            sig_label_stand: "MEETING POINT", sig_stand: "STAND UP", sig_label_go: "LET'S GO", sig_go: "GO !",
+            timer_title: "TRANSITION TIMER", records_title: "🏆 RECORDS", rec_default: "CLEANUP", btn_new_rec: "+ NEW",
+            map_title: "📍 GYM MAP", btn_clear: "CLEAR ALL", staff_title: "Zone Captains", nav_guide: "GUIDE", fs_close: "CLICK TO CLOSE"
+        }
+};
+function setTool(tool) {
+        currentTool = tool;
+        document.querySelectorAll('.obj-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+}
+function clearZones() {
+        document.getElementById('gym-floor').innerHTML = '';
+}
+function handleFloorClick(e) {
+if (e.target !== document.getElementById('gym-floor')) return;
+const rect = e.target.getBoundingClientRect();
+const x = e.clientX - rect.left, y = e.clientY - rect.top;
+const label = document.createElement('div');
+        label.className = 'label-pop';
+        label.style.left = x + 'px'; label.style.top = y + 'px';
+        label.innerHTML = currentTool === 'text' ? `<input type="text" placeholder="..." onfocus="this.select()">` : `<span class="text-2xl">${currentTool==='ballon'?'⚽':currentTool==='cone'?'🔼':currentTool==='cerceau'?'⭕':'🟡'}</span>`;
+        document.getElementById('gym-floor').appendChild(label);
+if(currentTool === 'text') label.querySelector('input').focus();
+}
+function addRole(r = "RÔLE", n = "PRÉNOM") {
+const div = document.createElement('div');
+        div.className = "comic-card p-4 flex flex-col items-center bg-white";
+        div.innerHTML = `<input type="text" value="${r}" class="text-center font-bold border-b-2 border-blue-500 mb-2 uppercase"><span class="text-4xl">👤</span><input type="text" value="${n}" class="text-center border-2 border-black mt-2">`;
+        document.getElementById('roles-container').appendChild(div);
+}
+    window.onload = () => { addRole("CHEF DES BACS"); addRole("GARDIEN DU SILENCE"); };
+</script>
+</body>
+</html>
