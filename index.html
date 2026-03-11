@@ -138,15 +138,14 @@ margin: 0;
 .gym-floor {
 position: relative;
 width: 100%;
-height: clamp(300px, 50vh, 600px);
-background: #d4a373;
-background-image:
-linear-gradient(rgba(255,255,255,.1) 2px, transparent 2px),
-linear-gradient(90deg, rgba(255,255,255,.1) 2px, transparent 2px);
-background-size: clamp(25px, 5vw, 50px) clamp(25px, 5vw, 50px);
+height: clamp(400px, 65vh, 1000px);
+background-image: url('https://drive.google.com/thumbnail?id=1fHhMH5-3rbHNo0fFSQba84I8eJLlHWjG&sz=w1200');
+background-size: cover;
+background-position: center;
 border: clamp(4px, 1vw, 8px) solid #5d4037;
 overflow: hidden;
 cursor: crosshair;
+resize: vertical;
 }
 .inventory-bar {
 display: flex;
@@ -259,7 +258,6 @@ padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 15px);
 box-shadow: clamp(3px, 1vw, 6px) clamp(3px, 1vw, 6px) 0px var(--zts-black);
 cursor: move;
 min-width: 60px;
-transform: translate(-50%, -50%);
 z-index: 50;
 display: flex;
 align-items: center;
@@ -267,6 +265,26 @@ justify-content: center;
 }
 .label-pop input {
 background: transparent; border: none; width: 100%; font-size: clamp(1rem, 3vw, 1.4rem); text-align: center; outline: none;
+}
+.dragging {
+opacity: 0.9;
+box-shadow: clamp(6px, 2vw, 12px) clamp(6px, 2vw, 12px) 0px rgba(0,0,0,0.3) !important;
+}
+.guide-step {
+background: white;
+border: 3px solid var(--zts-black);
+box-shadow: 5px 5px 0 var(--zts-black);
+border-radius: 4px;
+padding: 1.5rem;
+}
+.guide-step-num {
+width: 50px; height: 50px;
+background: var(--zts-blue);
+border: 3px solid var(--zts-black);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 1.5rem;
+flex-shrink: 0;
 }
 </style>
 </head>
@@ -296,13 +314,11 @@ background: transparent; border: none; width: 100%; font-size: clamp(1rem, 3vw, 
 </div>
 </div>
 <div class="relative w-full max-w-5xl comic-card bg-blue-100 mb-8 md:mb-12 overflow-hidden flex flex-col items-center justify-center border-4 md:border-8 border-black" style="min-height: 40vh;">
-<!-- Fond Gymnase personnalisé -->
 <img src="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200" alt="" class="absolute inset-0 w-full h-full object-cover opacity-80">
 <div class="relative z-10 flex flex-col md:flex-row items-center justify-center p-4 md:p-8 w-full">
 <div class="speech-bubble text-xl md:text-3xl font-bold max-w-md mb-6 md:mb-0 md:mr-8 text-center" data-i18n="landing_speech">
                 Salut ! C'est le chaos ici, non ? Utilise cet outil de gestion des transitions dans mon gymnase pour ramener l'ordre et gérer tes transitions comme un vrai pro !
 </div>
-<!-- Bûcheron d'accueil -->
 <img src="https://drive.google.com/thumbnail?id=1awbvfVJkUgmtMQSd6woHCg0HArrpDOlU&sz=w800" alt="" class="h-48 sm:h-64 md:h-80 object-contain filter drop-shadow-xl transform hover:scale-105 transition-transform duration-300">
 </div>
 </div>
@@ -431,17 +447,49 @@ background: transparent; border: none; width: 100%; font-size: clamp(1rem, 3vw, 
 <h2 class="text-3xl md:text-5xl uppercase text-blue-500" data-i18n="map_title">📍 PLAN DU GYMNASE</h2>
 <button onclick="showInfo('logistics')" class="nav-btn bg-yellow-300 !p-2 !px-4 flex items-center gap-2 transform hover:scale-105">💡 <span data-i18n="btn_info">INFO PÉDAGO</span></button>
 </div>
-<div class="comic-card">
+<div id="map-wrapper" class="comic-card transition-all duration-300">
 <div class="inventory-bar" id="inventory">
-<button class="obj-btn active" onclick="setTool('text')" id="tool-text">📝 TEXTE</button>
-<button class="obj-btn" onclick="setTool('ballon')">⚽ Ballon</button>
-<button class="obj-btn" onclick="setTool('cone')">🔼 Cône</button>
-<button class="obj-btn" onclick="setTool('cerceau')">⭕ Cerceau</button>
-<button class="obj-btn" onclick="setTool('pastille')">🟡 Pastille</button>
+<button class="obj-btn active flex flex-col items-center justify-center" onclick="setTool('text')" id="tool-text">
+<span class="text-2xl md:text-3xl leading-none">📝</span>
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">TEXTE</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1aKULZw_8rveLGfkaJOubnXhRKXWtU6my')">
+<img src="https://drive.google.com/thumbnail?id=1aKULZw_8rveLGfkaJOubnXhRKXWtU6my&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">BALLON</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1IEfzSE3V4-lJMuAMyAzSfNAITwDZgCaf')">
+<img src="https://drive.google.com/thumbnail?id=1IEfzSE3V4-lJMuAMyAzSfNAITwDZgCaf&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">CÔNE</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1y90MYarn-CLvidAQH9-DS-f15EAFkpLT')">
+<img src="https://drive.google.com/thumbnail?id=1y90MYarn-CLvidAQH9-DS-f15EAFkpLT&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">CERCEAU</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1LDYA5lDd9uf0Ta3rRZBd5DYgedcym4eH')">
+<img src="https://drive.google.com/thumbnail?id=1LDYA5lDd9uf0Ta3rRZBd5DYgedcym4eH&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">PASTILLE</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1wPLg699etJycrsR-DSASr-pCP1SCKP5G')">
+<img src="https://drive.google.com/thumbnail?id=1wPLg699etJycrsR-DSASr-pCP1SCKP5G&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">BANC</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1Fd95u9WaUY_NTU8aUPQFOalo5sbGAykR')">
+<img src="https://drive.google.com/thumbnail?id=1Fd95u9WaUY_NTU8aUPQFOalo5sbGAykR&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">TAPIS</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1WfyWPy4b47vE6jD-BwVEJ_CnY43-iYyt')">
+<img src="https://drive.google.com/thumbnail?id=1WfyWPy4b47vE6jD-BwVEJ_CnY43-iYyt&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">CIBLE</span>
+</button>
+<button class="obj-btn !p-2 hover:bg-blue-100 flex flex-col items-center justify-center" onclick="setTool('img_1yT2-PGqKeanJ9vXuWwPPLe-jDJLUAXAh')">
+<img src="https://drive.google.com/thumbnail?id=1yT2-PGqKeanJ9vXuWwPPLe-jDJLUAXAh&sz=w128" class="h-14 md:h-20 w-14 md:w-20 object-contain">
+<span class="text-[10px] md:text-xs mt-1 font-sans font-bold">AUTRE</span>
+</button>
 </div>
 <div class="p-4 md:p-8">
-<div class="flex justify-end mb-4">
-<button onclick="clearZones()" class="nav-btn bg-red-500 !text-white !text-xs" data-i18n="btn_clear">EFFACER TOUT</button>
+<div class="flex justify-end gap-2 md:gap-4 mb-4">
+<button onclick="toggleGymFullscreen()" id="btn-gym-fs" class="nav-btn bg-blue-500 !text-white !text-xs md:!text-sm" data-i18n="btn_gym_fs">🔍 PLEIN ÉCRAN</button>
+<button onclick="clearZones()" class="nav-btn bg-red-500 !text-white !text-xs md:!text-sm" data-i18n="btn_clear">EFFACER TOUT</button>
 </div>
 <div class="gym-floor" id="gym-floor" onclick="handleFloorClick(event)"></div>
 </div>
@@ -458,6 +506,56 @@ background: transparent; border: none; width: 100%; font-size: clamp(1rem, 3vw, 
 <button onclick="addRole()" class="nav-btn bg-blue-500 !text-white">+ AJOUTER RÔLE</button>
 </div>
 <div id="roles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10"></div>
+</div>
+</div>
+<!-- GUIDE SECTION -->
+<div id="section-guide" class="hidden px-2">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-3xl md:text-5xl uppercase text-pink-500">📖 <span data-i18n="nav_guide">GUIDE D'UTILISATION</span></h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+<div class="guide-step flex gap-4 items-start">
+<div class="guide-step-num text-white font-bold">1</div>
+<div>
+<h3 class="text-2xl text-blue-500 mb-2" data-i18n="guide_step1_title">SIGNAUX VISUELS</h3>
+<p class="font-sans text-gray-700 text-base leading-relaxed" data-i18n="guide_step1_desc">Cliquez sur un signal pour l'afficher en plein écran. Appuyez sur DÉBUTER pour jouer le son associé. Cliquez n'importe où pour fermer.</p>
+</div>
+</div>
+<div class="guide-step flex gap-4 items-start">
+<div class="guide-step-num text-white font-bold">2</div>
+<div>
+<h3 class="text-2xl text-blue-500 mb-2" data-i18n="guide_step2_title">CHRONOMÈTRE</h3>
+<p class="font-sans text-gray-700 text-base leading-relaxed" data-i18n="guide_step2_desc">Choisissez 45s ou 75s, ou entrez un temps personnalisé. Cliquez DÉPART pour lancer le compte à rebours. Un son retentit à la fin.</p>
+</div>
+</div>
+<div class="guide-step flex gap-4 items-start">
+<div class="guide-step-num text-white font-bold">3</div>
+<div>
+<h3 class="text-2xl text-blue-500 mb-2" data-i18n="guide_step3_title">PLAN DU GYMNASE</h3>
+<p class="font-sans text-gray-700 text-base leading-relaxed" data-i18n="guide_step3_desc">Sélectionnez un objet dans la barre (texte, ballon, cône...) puis cliquez sur le plan pour le placer. Glissez-déposez pour repositionner. Redimensionnez avec le coin inférieur droit.</p>
+</div>
+</div>
+<div class="guide-step flex gap-4 items-start">
+<div class="guide-step-num text-white font-bold">4</div>
+<div>
+<h3 class="text-2xl text-blue-500 mb-2" data-i18n="guide_step4_title">STAFF</h3>
+<p class="font-sans text-gray-700 text-base leading-relaxed" data-i18n="guide_step4_desc">Ajoutez des rôles pour vos élèves responsables (Chef des bacs, Gardien du silence...). Cliquez sur les champs pour les modifier avec les noms de vos élèves.</p>
+</div>
+</div>
+<div class="guide-step flex gap-4 items-start">
+<div class="guide-step-num text-white font-bold">5</div>
+<div>
+<h3 class="text-2xl text-blue-500 mb-2" data-i18n="guide_step5_title">LANGUE</h3>
+<p class="font-sans text-gray-700 text-base leading-relaxed" data-i18n="guide_step5_desc">Basculez entre Français et Anglais en tout temps grâce aux boutons FR / EN en haut à droite de l'écran.</p>
+</div>
+</div>
+<div class="guide-step flex gap-4 items-start">
+<div class="guide-step-num text-white font-bold">💡</div>
+<div>
+<h3 class="text-2xl text-pink-500 mb-2" data-i18n="guide_tip_title">CONSEIL PRO</h3>
+<p class="font-sans text-gray-700 text-base leading-relaxed" data-i18n="guide_tip_desc">Utilisez le mode PLEIN ÉCRAN dans la section ZONES pour projeter le plan du gymnase sur un écran ou tableau blanc interactif !</p>
+</div>
+</div>
 </div>
 </div>
 </main>
@@ -478,7 +576,6 @@ background: transparent; border: none; width: 100%; font-size: clamp(1rem, 3vw, 
 <audio id="audio-end" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
 <audio id="signal-audio"></audio>
 <script>
-// --- GESTION DES ERREURS ---
 function handleImageError(img, text) {
 const container = img.parentElement;
         img.classList.add('hidden');
@@ -498,16 +595,14 @@ const infoData = {
         logistics: { icon: '🗺️', titleFr: 'Stratégie des Zones', descFr: "Définissez visuellement l'espace pour éviter l'éparpillement. Savoir OÙ aller calme le chaos.", titleEn: 'Zone Strategy', descEn: "Define space visually to prevent scattering. Knowing WHERE to go calms the chaos." },
         captains: { icon: '🦸‍♂️', titleFr: 'Responsabilisation', descFr: "Déléguez le leadership aux élèves. Les capitaines gèrent le matériel et le silence pendant que vous enseignez.", titleEn: 'Empowerment', descEn: "Delegate leadership to students. Captains manage gear and silence while you teach." }
 };
-
 const signalData = {
-        timeout:      { id: '1GumIBnUsa8rGFSZ94JJAH541olzqEfFV', fr: ['TIME OUT !', 'On s\'arrête ! Temps mort !'],       en: ['TIME OUT!',    'Stop! Time out!'],         bg: 'var(--zts-red)',    sound: 'timeout.mp3' },
-        halt:         { id: '1uWQ_cgQqTWyqNy4ge-e0epino9gXsGaT', fr: ['SILENCE',    'Écoute attentive demandée !'],       en: ['SILENCE',      'Listen up!'],              bg: 'var(--zts-black)', sound: 'stop.mp3' },
-        cleanup:      { id: '1_vOKsidF5kTru34eDrb209qMl7OJRbEw', fr: ['RANGEMENT',  'Rangez le matériel dans les bacs !'], en: ['CLEANUP',      'Put equipment in the bins!'], bg: 'var(--zts-yellow)', sound: 'ranger.mp3' },
-        meeting_sit:  { id: '1asbkum2rg-9yGhuFf2nLmcnfABP15uh5', fr: ['POINT REPÈRE','Regroupement assis !'],              en: ['MEETING POINT','Sit down!'],              bg: 'var(--zts-blue)',  sound: 'assis.mp3' },
-        meeting_stand:{ id: '15KuAH1aWLxD7VrORn3oosahTzR3-32zc', fr: ['POINT REPÈRE','Regroupement debout !'],             en: ['MEETING POINT','Stand up!'],              bg: 'var(--zts-blue)',  sound: 'cocus.mp3' },
-        gameon:       { id: '1YaYeL-LFVdSZra8KUz4_Bwd269kW7ZNA', fr: ['C\'EST PARTI !','Au jeu ! Tout le monde en place !'],en: ['GAME ON!',    'Go! Everyone in place!'], bg: 'var(--zts-green)', sound: 'gameon.mp3' }
+        timeout: { id: '1GumIBnUsa8rGFSZ94JJAH541olzqEfFV', fr: ['TIME OUT !', 'On s\'arrête ! Temps mort !'], en: ['TIME OUT!', 'Stop! Time out!'], bg: 'var(--zts-red)', sound: 'timeout.mp3' },
+        halt: { id: '1uWQ_cgQqTWyqNy4ge-e0epino9gXsGaT', fr: ['SILENCE', 'Écoute attentive demandée !'], en: ['SILENCE', 'Listen up!'], bg: 'var(--zts-black)', sound: 'stop.mp3' },
+        cleanup: { id: '1_vOKsidF5kTru34eDrb209qMl7OJRbEw', fr: ['RANGEMENT', 'Rangez le matériel dans les bacs !'], en: ['CLEANUP', 'Put equipment in the bins!'], bg: 'var(--zts-yellow)', sound: 'ranger.mp3' },
+        meeting_sit: { id: '1asbkum2rg-9yGhuFf2nLmcnfABP15uh5', fr: ['POINT REPÈRE', 'Regroupement assis !'], en: ['MEETING POINT', 'Sit down!'], bg: 'var(--zts-blue)', sound: 'assis.mp3' },
+        meeting_stand: { id: '15KuAH1aWLxD7VrORn3oosahTzR3-32zc', fr: ['POINT REPÈRE', 'Regroupement debout !'], en: ['MEETING POINT', 'Stand up!'], bg: 'var(--zts-blue)', sound: 'cocus.mp3' },
+        gameon: { id: '1YaYeL-LFVdSZra8KUz4_Bwd269kW7ZNA', fr: ['C\'EST PARTI !', 'Au jeu ! Tout le monde en place !'], en: ['GAME ON!', 'Go! Everyone in place!'], bg: 'var(--zts-green)', sound: 'gameon.mp3' }
 };
-
 function enterApp() { document.getElementById('landing-page').classList.add('hidden'); document.getElementById('main-app').classList.remove('hidden'); }
 function goHome() { document.getElementById('main-app').classList.add('hidden'); document.getElementById('landing-page').classList.remove('hidden'); }
 function triggerFullscreen(key) {
@@ -524,7 +619,7 @@ const img = document.getElementById('fs-img-char');
 }
 function playSignalAudio() {
         document.getElementById('signal-audio').play().catch(e => {
-            console.warn("Lecture audio bloquée ou fichier non trouvé :", e);
+            console.warn("Fichier audio non trouvé ou lecture bloquée.");
         });
 }
 function hideFullscreen() {
@@ -542,12 +637,28 @@ const data = infoData[key];
 }
 function closeInfoModal() { document.getElementById('info-modal').classList.replace('flex', 'hidden'); }
 function switchTab(id) {
-['signals', 'timer', 'logistics', 'captains'].forEach(t => {
+['signals', 'timer', 'logistics', 'captains', 'guide'].forEach(t => {
             document.getElementById(`section-${t}`).classList.add('hidden');
             document.getElementById(`tab-${t}`).classList.remove('active');
 });
         document.getElementById(`section-${id}`).classList.remove('hidden');
         document.getElementById(`tab-${id}`).classList.add('active');
+}
+function toggleGymFullscreen() {
+const wrapper = document.getElementById('map-wrapper');
+const floor = document.getElementById('gym-floor');
+const btn = document.getElementById('btn-gym-fs');
+if (!wrapper.classList.contains('fixed')) {
+            wrapper.classList.add('fixed', 'inset-0', 'z-[9999]', 'bg-white', 'p-4', 'overflow-y-auto');
+            floor.style.height = 'calc(100vh - 200px)';
+            btn.innerHTML = currentLang === 'fr' ? '❌ FERMER' : '❌ CLOSE';
+            btn.classList.replace('bg-blue-500', 'bg-red-500');
+} else {
+            wrapper.classList.remove('fixed', 'inset-0', 'z-[9999]', 'bg-white', 'p-4', 'overflow-y-auto');
+            floor.style.height = 'clamp(400px, 65vh, 1000px)';
+            btn.innerHTML = currentLang === 'fr' ? '🔍 PLEIN ÉCRAN' : '🔍 FULLSCREEN';
+            btn.classList.replace('bg-red-500', 'bg-blue-500');
+}
 }
 let timerInterval, timeRemaining = 75;
 function updateTimerDisplay() {
@@ -571,52 +682,127 @@ if (i18n[lang][key]) el.textContent = i18n[lang][key];
 });
         document.getElementById('lang-fr').classList.toggle('active', lang==='fr');
         document.getElementById('lang-en').classList.toggle('active', lang==='en');
+const btnFs = document.getElementById('btn-gym-fs');
+if(btnFs) {
+if (document.getElementById('map-wrapper').classList.contains('fixed')) {
+                btnFs.innerHTML = lang === 'fr' ? '❌ FERMER' : '❌ CLOSE';
+} else {
+                btnFs.innerHTML = lang === 'fr' ? '🔍 PLEIN ÉCRAN' : '🔍 FULLSCREEN';
+}
+}
 }
 const i18n = {
         fr: {
-            title: "GESTION ET TRANSITION DANS LE GYMNASE",
-            subtitle: "OUTIL DE GESTION DES TRANSITIONS",
+            title: "GESTION ET TRANSITION DANS LE GYMNASE", subtitle: "OUTIL DE GESTION DES TRANSITIONS",
             landing_speech: "Salut ! C'est le chaos ici, non ? Utilise cet outil de gestion des transitions dans mon gymnase pour ramener l'ordre et gérer tes transitions comme un vrai pro !",
-            nav_home: "ACCUEIL", nav_signals: "SIGNAUX", nav_timer: "CHRONO", nav_zones: "ZONES", nav_staff: "STAFF",
+            nav_home: "ACCUEIL", nav_signals: "SIGNAUX", nav_timer: "CHRONO", nav_zones: "ZONES", nav_staff: "STAFF", nav_guide: "GUIDE",
             btn_enter: "ENTREZ", btn_understood: "J'AI COMPRIS !", btn_info: "INFO PÉDAGO", btn_start_signal: "DÉBUTER",
             sig_label_timeout: "TIME OUT", sig_timeout: "TIME OUT", sig_label_halt: "HALTE LÀ", sig_halt: "SILENCE",
             sig_label_cleanup: "RANGEMENT", sig_cleanup: "RANGEZ", sig_label_sit: "POINT REPÈRE", sig_sit: "ASSIS",
             sig_label_stand: "POINT REPÈRE", sig_stand: "DEBOUT", sig_label_go: "C'EST PARTI", sig_go: "GO !",
             timer_title: "CHRONO TRANSITION", records_title: "🏆 RECORDS", rec_default: "RANGEMENT", btn_new_rec: "+ NOUVEAU",
-            map_title: "📍 PLAN DU GYMNASE", btn_clear: "EFFACER TOUT", staff_title: "Capitaines de zone", nav_guide: "GUIDE", fs_close: "CLIQUEZ POUR FERMER"
+            map_title: "📍 PLAN DU GYMNASE", btn_clear: "EFFACER TOUT", btn_gym_fs: "🔍 PLEIN ÉCRAN", staff_title: "Capitaines de zone", fs_close: "CLIQUEZ POUR FERMER",
+            guide_step1_title: "SIGNAUX VISUELS", guide_step1_desc: "Cliquez sur un signal pour l'afficher en plein écran. Appuyez sur DÉBUTER pour jouer le son associé. Cliquez n'importe où pour fermer.",
+            guide_step2_title: "CHRONOMÈTRE", guide_step2_desc: "Choisissez 45s ou 75s, ou entrez un temps personnalisé. Cliquez DÉPART pour lancer le compte à rebours. Un son retentit à la fin.",
+            guide_step3_title: "PLAN DU GYMNASE", guide_step3_desc: "Sélectionnez un objet dans la barre (texte, ballon, cône...) puis cliquez sur le plan pour le placer. Glissez-déposez pour repositionner.",
+            guide_step4_title: "STAFF", guide_step4_desc: "Ajoutez des rôles pour vos élèves responsables. Cliquez sur les champs pour les modifier avec les noms de vos élèves.",
+            guide_step5_title: "LANGUE", guide_step5_desc: "Basculez entre Français et Anglais grâce aux boutons FR / EN en haut à droite.",
+            guide_tip_title: "CONSEIL PRO", guide_tip_desc: "Utilisez le mode PLEIN ÉCRAN dans la section ZONES pour projeter le plan du gymnase sur un tableau blanc interactif !"
         },
         en: {
-            title: "GYM MANAGEMENT AND TRANSITION",
-            subtitle: "TRANSITION MANAGEMENT TOOL",
+            title: "GYM MANAGEMENT AND TRANSITION", subtitle: "TRANSITION MANAGEMENT TOOL",
             landing_speech: "Hey! Looks like chaos in here, right? Use this tool to bring order and manage transitions like a real pro!",
-            nav_home: "HOME", nav_signals: "SIGNALS", nav_timer: "TIMER", nav_zones: "ZONES", nav_staff: "STAFF",
+            nav_home: "HOME", nav_signals: "SIGNALS", nav_timer: "TIMER", nav_zones: "ZONES", nav_staff: "STAFF", nav_guide: "GUIDE",
             btn_enter: "ENTER", btn_understood: "GOT IT!", btn_info: "PEDAGOGY INFO", btn_start_signal: "START",
             sig_label_timeout: "TIME OUT", sig_timeout: "TIME OUT", sig_label_halt: "HALT", sig_halt: "SILENCE",
             sig_label_cleanup: "CLEANUP", sig_cleanup: "CLEANUP", sig_label_sit: "MEETING POINT", sig_sit: "SIT DOWN",
             sig_label_stand: "MEETING POINT", sig_stand: "STAND UP", sig_label_go: "LET'S GO", sig_go: "GO !",
             timer_title: "TRANSITION TIMER", records_title: "🏆 RECORDS", rec_default: "CLEANUP", btn_new_rec: "+ NEW",
-            map_title: "📍 GYM MAP", btn_clear: "CLEAR ALL", staff_title: "Zone Captains", nav_guide: "GUIDE", fs_close: "CLICK TO CLOSE"
+            map_title: "📍 GYM MAP", btn_clear: "CLEAR ALL", btn_gym_fs: "🔍 FULLSCREEN", staff_title: "Zone Captains", fs_close: "CLICK TO CLOSE",
+            guide_step1_title: "VISUAL SIGNALS", guide_step1_desc: "Click a signal to display it fullscreen. Press START to play the associated sound. Click anywhere to close.",
+            guide_step2_title: "TIMER", guide_step2_desc: "Choose 45s or 75s, or enter a custom time. Click START to begin the countdown. A sound plays at the end.",
+            guide_step3_title: "GYM MAP", guide_step3_desc: "Select an object (text, ball, cone...) then click on the map to place it. Drag and drop to reposition.",
+            guide_step4_title: "STAFF", guide_step4_desc: "Add roles for your responsible students. Click on the fields to edit with your students' names.",
+            guide_step5_title: "LANGUAGE", guide_step5_desc: "Switch between French and English using the FR / EN buttons at the top right.",
+            guide_tip_title: "PRO TIP", guide_tip_desc: "Use FULLSCREEN mode in the ZONES section to project the gym map on an interactive whiteboard!"
         }
 };
 function setTool(tool) {
         currentTool = tool;
-        document.querySelectorAll('.obj-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
+        document.querySelectorAll('.obj-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
 }
-function clearZones() {
-        document.getElementById('gym-floor').innerHTML = '';
+let isDragging = false;
+let currentDraggable = null;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+function makeDraggable(element) {
+        element.addEventListener('mousedown', startDrag);
+        element.addEventListener('touchstart', startDrag, {passive: false});
 }
+function startDrag(e) {
+if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT' || e.target.textContent === 'X') return;
+const rect = this.getBoundingClientRect();
+const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+if (clientX > rect.right - 30 && clientY > rect.bottom - 30) { return; }
+        isDragging = true;
+        currentDraggable = this;
+this.classList.add('dragging');
+        document.querySelectorAll('.label-pop').forEach(el => el.style.zIndex = '50');
+this.style.zIndex = '51';
+        dragOffsetX = clientX - rect.left;
+        dragOffsetY = clientY - rect.top;
+        e.stopPropagation();
+}
+function drag(e) {
+if (!isDragging || !currentDraggable) return;
+        e.preventDefault();
+const floorRect = document.getElementById('gym-floor').getBoundingClientRect();
+const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+let x = clientX - floorRect.left - dragOffsetX;
+let y = clientY - floorRect.top - dragOffsetY;
+        currentDraggable.style.left = x + 'px';
+        currentDraggable.style.top = y + 'px';
+}
+function stopDrag() {
+if (currentDraggable) { currentDraggable.classList.remove('dragging'); }
+        isDragging = false;
+        currentDraggable = null;
+}
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchend', stopDrag);
 function handleFloorClick(e) {
 if (e.target !== document.getElementById('gym-floor')) return;
 const rect = e.target.getBoundingClientRect();
-const x = e.clientX - rect.left, y = e.clientY - rect.top;
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
 const label = document.createElement('div');
-        label.className = 'label-pop';
-        label.style.left = x + 'px'; label.style.top = y + 'px';
-        label.innerHTML = currentTool === 'text' ? `<input type="text" placeholder="..." onfocus="this.select()">` : `<span class="text-2xl">${currentTool==='ballon'?'⚽':currentTool==='cone'?'🔼':currentTool==='cerceau'?'⭕':'🟡'}</span>`;
+        label.className = 'label-pop absolute';
+let content = '';
+let offsetCenter = 30;
+if (currentTool === 'text') {
+            content = `<input type="text" placeholder="..." onfocus="this.select()">`;
+} else if (currentTool.startsWith('img_')) {
+const imgId = currentTool.replace('img_', '');
+            label.style.background = 'transparent';
+            label.style.border = 'none';
+            label.style.boxShadow = 'none';
+            label.style.padding = '0';
+            offsetCenter = 70;
+            content = `<div style="resize: both; overflow: hidden; width: 140px; height: 140px; min-width: 60px; min-height: 60px; border: 3px dashed rgba(0,0,0,0.5); background: rgba(255,255,255,0.7); border-radius: 8px;"><img src="https://drive.google.com/thumbnail?id=${imgId}&sz=w400" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;"></div>`;
+}
+        label.style.left = (x - offsetCenter) + 'px';
+        label.style.top = (y - offsetCenter) + 'px';
+        label.innerHTML = `<div class="absolute -top-4 -right-4 bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center cursor-pointer border-2 border-black font-bold text-sm z-[100]" onclick="event.stopPropagation(); this.parentElement.remove()">X</div>${content}`;
+        makeDraggable(label);
         document.getElementById('gym-floor').appendChild(label);
 if(currentTool === 'text') label.querySelector('input').focus();
 }
+function clearZones() { document.querySelectorAll('.label-pop').forEach(el => el.remove()); }
 function addRole(r = "RÔLE", n = "PRÉNOM") {
 const div = document.createElement('div');
         div.className = "comic-card p-4 flex flex-col items-center bg-white";
