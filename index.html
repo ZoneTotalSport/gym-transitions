@@ -993,6 +993,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
         <button onclick="switchTab('logistics')" id="tab-logistics" class="nav-tab" data-i18n="nav_zones">ZONES</button>
         <button onclick="switchTab('captains')" id="tab-captains" class="nav-tab" data-i18n="nav_staff">STAFF</button>
         <button onclick="switchTab('guide')" id="tab-guide" class="nav-tab" data-i18n="nav_guide">GUIDE</button>
+        <button onclick="backToLanding()" class="nav-tab" style="background:linear-gradient(135deg,#FFD700,#FF9800);color:#111;border-color:transparent;" data-i18n="nav_info">INFO</button>
       </nav>
     </div>
   </header>
@@ -1278,7 +1279,7 @@ const i18n = {
   fr: {
     title: "GESTION ET TRANSITION DANS LE GYMNASE",
     subtitle: "OUTIL DE GESTION DES TRANSITIONS",
-    nav_signals: "SIGNAUX", nav_timer: "CHRONO", nav_zones: "ZONES", nav_staff: "STAFF", nav_guide: "GUIDE",
+    nav_signals: "SIGNAUX", nav_timer: "CHRONO", nav_zones: "ZONES", nav_staff: "STAFF", nav_guide: "GUIDE", nav_info: "INFO",
     btn_understood: "J'AI COMPRIS !", btn_info: "INFO P\u00c9DAGO", btn_start_signal: "D\u00c9BUTER",
     btn_start: "D\u00c9PART", btn_stop: "ARR\u00caT",
     sig_label_timeout: "TIME OUT", sig_timeout: "TIME OUT", sig_label_halt: "HALTE L\u00c0", sig_halt: "SILENCE",
@@ -1300,7 +1301,7 @@ const i18n = {
   en: {
     title: "GYM MANAGEMENT AND TRANSITION",
     subtitle: "TRANSITION MANAGEMENT TOOL",
-    nav_signals: "SIGNALS", nav_timer: "TIMER", nav_zones: "ZONES", nav_staff: "STAFF", nav_guide: "GUIDE",
+    nav_signals: "SIGNALS", nav_timer: "TIMER", nav_zones: "ZONES", nav_staff: "STAFF", nav_guide: "GUIDE", nav_info: "INFO",
     btn_understood: "GOT IT!", btn_info: "PEDAGOGY INFO", btn_start_signal: "START",
     btn_start: "START", btn_stop: "STOP",
     sig_label_timeout: "TIME OUT", sig_timeout: "TIME OUT", sig_label_halt: "HALT", sig_halt: "SILENCE",
@@ -1354,6 +1355,18 @@ function enterApp() {
   document.getElementById('landing-page').style.display = 'none';
   document.getElementById('main-app').style.display = 'block';
   startGymAmbiance();
+}
+
+function backToLanding() {
+  // Pause gym ambiance
+  if (gymAmbiance && !gymAmbiance.paused) {
+    gymAmbiance.pause();
+    gymAmbiance.currentTime = 0;
+    gymAmbianceWasPlaying = false;
+  }
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('landing-page').style.display = '';
+  window.scrollTo(0, 0);
 }
 
 /* ====== FULLSCREEN SIGNALS ====== */
