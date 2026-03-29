@@ -35,16 +35,17 @@
 <link rel="preconnect" href="https://drive.google.com">
 <link rel="preconnect" href="https://lh3.googleusercontent.com">
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Luckiest+Guy&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Luckiest+Guy&family=Schoolbell&display=swap" rel="stylesheet">
 <style>
 /* ====== RESET & BASE ====== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: #f0f2f5;
+  background: url('img/bg-gymnase.png') center/cover no-repeat fixed;
+  background-color: #2a2a2a;
   color: #1a1a2e;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
@@ -54,26 +55,20 @@ body::before {
   content: '';
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: url('img/bg-gymnase.png') center/cover no-repeat fixed;
-  opacity: 0.12;
+  background: rgba(0,0,0,0.35);
   z-index: 0;
   pointer-events: none;
 }
 
 body::after {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(180deg, rgba(240,242,245,0.88) 0%, rgba(240,242,245,0.82) 50%, rgba(240,242,245,0.9) 100%);
-  z-index: 0;
-  pointer-events: none;
+  display: none;
 }
 
 /* ====== LOADING SCREEN ====== */
 #loading-screen {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: #f0f2f5;
+  background: rgba(255,255,255,0.95);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,7 +87,7 @@ body::after {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader-text {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 1.2rem;
   color: #0096C7;
   letter-spacing: 2px;
@@ -110,6 +105,18 @@ body::after {
   padding: 40px 20px;
   text-align: center;
 }
+.landing-box {
+  background: rgba(255,255,255,0.9);
+  border-radius: 30px;
+  padding: 40px 30px;
+  max-width: 750px;
+  width: 100%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .landing-mascot {
   width: clamp(250px, 50vw, 450px);
   height: auto;
@@ -122,7 +129,7 @@ body::after {
   50% { transform: translateY(-12px) rotate(1deg); }
 }
 .landing-title {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(1.8rem, 5vw, 3rem);
   font-weight: 700;
   color: #1a1a2e;
@@ -131,7 +138,7 @@ body::after {
 }
 .landing-title span { color: #0096C7; }
 .landing-subtitle {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   color: #e6a800;
   text-transform: uppercase;
@@ -139,7 +146,7 @@ body::after {
   margin-bottom: 24px;
 }
 .landing-desc {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-size: clamp(1rem, 2.5vw, 1.15rem);
   color: #555;
   max-width: 600px;
@@ -155,17 +162,17 @@ body::after {
   max-width: 700px;
 }
 .landing-feature {
-  background: rgba(0,150,199,0.08);
-  border: 1px solid rgba(0,150,199,0.2);
+  background: rgba(0,150,199,0.1);
+  border: 1px solid rgba(0,150,199,0.25);
   border-radius: 30px;
   padding: 8px 18px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.85rem;
+  font-family: 'Schoolbell', cursive;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #0096C7;
+  color: #007a9e;
 }
 .landing-enter-btn {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(1.2rem, 3vw, 1.6rem);
   font-weight: 700;
   padding: 18px 50px;
@@ -190,10 +197,10 @@ body::after {
 }
 
 /* ====== TYPOGRAPHY ====== */
-h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
+h1, h2, h3, h4 { font-family: 'Luckiest Guy', cursive; }
 
 .app-title {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(1.4rem, 4vw, 2.2rem);
   font-weight: 700;
   color: #1a1a2e;
@@ -202,7 +209,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 .app-title span { color: #0096C7; }
 .app-subtitle {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-size: clamp(0.7rem, 2vw, 0.9rem);
   color: #666;
   text-transform: uppercase;
@@ -225,12 +232,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 2px solid rgba(0,0,0,0.1);
   padding: 12px 16px;
   margin: 0 -16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 .header-inner {
   max-width: 1400px;
@@ -249,7 +257,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 6px;
 }
 .nav-tab {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(0.7rem, 2vw, 0.85rem);
   font-weight: 600;
   padding: 8px 16px;
@@ -284,7 +292,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 4px;
 }
 .lang-btn {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 6px 12px;
@@ -303,16 +311,16 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 
 /* ====== CARDS ====== */
 .dark-card {
-  background: rgba(255,255,255,0.85);
-  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 20px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 .dark-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0,150,199,0.12);
+  box-shadow: 0 8px 30px rgba(0,150,199,0.15);
 }
 
 /* ====== SECTION HEADER ====== */
@@ -325,7 +333,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 12px;
 }
 .section-title {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 700;
   color: #1a1a2e;
@@ -334,7 +342,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 
 /* ====== BUTTONS ====== */
 .btn {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-weight: 600;
   padding: 10px 24px;
   border-radius: 30px;
@@ -404,13 +412,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 20px;
 }
 .signal-card {
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .signal-card:hover {
   transform: translateY(-4px);
@@ -420,7 +428,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 .signal-thumb-container {
   width: 100%;
   height: 200px;
-  background: rgba(245,245,248,0.9);
+  background: rgba(240,242,245,0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -437,7 +445,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   text-align: center;
 }
 .signal-label {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-size: 0.75rem;
   color: #888;
   text-transform: uppercase;
@@ -445,7 +453,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   margin-bottom: 4px;
 }
 .signal-name {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -458,7 +466,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 .img-fallback {
   width: 100%; height: 200px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 1.5rem; color: #888;
   background: rgba(245,245,248,0.9);
 }
@@ -493,7 +501,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 .fullscreen-text-container { text-align: center; flex-shrink: 0; padding-bottom: 1rem; }
 .fullscreen-title {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(2.5rem, 12vw, 7rem);
   font-weight: 700;
   color: white;
@@ -503,7 +511,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   line-height: 0.95;
 }
 .fullscreen-desc {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-size: clamp(1.2rem, 5vw, 2.5rem);
   color: rgba(255,255,255,0.9);
   font-weight: 700;
@@ -511,7 +519,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   margin-top: 1rem;
 }
 .fs-start-btn {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-weight: 700;
   font-size: clamp(1.1rem, 4vw, 1.8rem);
   padding: 14px 40px;
@@ -527,7 +535,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 .fs-start-btn:hover { transform: scale(1.05); }
 .fs-close-hint {
   color: rgba(255,255,255,0.25);
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.85rem;
@@ -553,7 +561,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   padding: 40px 20px;
 }
 .timer-big {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: clamp(4rem, 18vw, 10rem);
   font-weight: 700;
   color: #00E5FF;
@@ -569,7 +577,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   margin-bottom: 24px;
 }
 .timer-input {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-weight: 700;
   font-size: 1.1rem;
   width: 90px;
@@ -590,7 +598,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 
 .records-card { padding: 24px; }
 .records-title {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 1.4rem;
   font-weight: 700;
   color: #e6a800;
@@ -603,7 +611,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-weight: 700;
   font-size: 1rem;
   color: #1a1a2e;
@@ -629,13 +637,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   flex-wrap: wrap;
   gap: 8px;
   padding: 16px;
-  background: rgba(255,255,255,0.92);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px 20px 0 0;
   justify-content: center;
 }
 .obj-btn {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-weight: 700;
   font-size: 0.7rem;
   padding: 8px 10px;
@@ -690,7 +698,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   justify-content: center;
 }
 .label-pop input {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-weight: 700;
   background: transparent;
   border: none;
@@ -727,7 +735,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 9999;
-  background: #f0f2f5;
+  background: rgba(255,255,255,0.95);
   padding: 16px;
   overflow-y: auto;
   border-radius: 0 !important;
@@ -743,8 +751,8 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 16px;
 }
 .role-card {
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 20px;
   padding: 24px 16px;
   display: flex;
@@ -752,10 +760,10 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   align-items: center;
   gap: 8px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .role-card input {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-weight: 700;
   background: transparent;
   border: none;
@@ -770,7 +778,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 .role-card input:focus { border-bottom-color: #0096C7; }
 .role-card input.role-name {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 0.85rem;
   color: #0096C7;
   text-transform: uppercase;
@@ -785,14 +793,14 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 16px;
 }
 .guide-step {
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 20px;
   padding: 24px;
   display: flex;
   gap: 16px;
   align-items: flex-start;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .guide-num {
   width: 44px; height: 44px;
@@ -802,7 +810,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-weight: 700;
   font-size: 1.2rem;
   color: #fff;
@@ -812,14 +820,14 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   color: #111;
 }
 .guide-content h3 {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 1.1rem;
   font-weight: 700;
   color: #0096C7;
   margin-bottom: 6px;
 }
 .guide-content p {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-size: 0.9rem;
   color: #555;
   line-height: 1.6;
@@ -868,14 +876,14 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 .info-modal-icon { font-size: 3.5rem; margin-bottom: 16px; }
 .info-modal-title {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Luckiest Guy', cursive;
   font-size: 1.6rem;
   font-weight: 700;
   color: #0096C7;
   margin-bottom: 12px;
 }
 .info-modal-desc {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Schoolbell', cursive;
   font-size: 1.05rem;
   color: #555;
   line-height: 1.7;
@@ -883,7 +891,14 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 
 /* ====== SECTIONS CONTENT ====== */
-.section-content { padding-top: 24px; }
+.section-content {
+  padding: 28px 24px;
+  margin-top: 20px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 24px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+}
 .section-content.hidden { display: none; }
 
 /* ====== RESPONSIVE ====== */
@@ -965,18 +980,20 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 <!-- LANDING PAGE -->
 <div id="landing-page">
   <img src="img/bucheron-panique.png" alt="Mr Root en panique dans le gymnase" class="landing-mascot">
-  <h1 class="landing-title"><span>Gestion</span> et Transition<br>dans le Gymnase</h1>
-  <div class="landing-subtitle" data-i18n="landing_sub">Outil de gestion des transitions</div>
-  <p class="landing-desc" data-i18n="landing_desc">C'est le chaos dans ton gymnase ? Utilise cet outil pour gérer tes transitions comme un pro ! Signaux visuels avec sons, chronomètre de transition, plan interactif du gymnase et gestion des capitaines — tout est là.</p>
-  <div class="landing-features">
-    <span class="landing-feature" data-i18n="lf1">🛑 Signaux visuels + sons</span>
-    <span class="landing-feature" data-i18n="lf2">⏱️ Chrono de transition</span>
-    <span class="landing-feature" data-i18n="lf3">🗺️ Plan du gymnase</span>
-    <span class="landing-feature" data-i18n="lf4">🧢 Capitaines de zone</span>
-    <span class="landing-feature" data-i18n="lf5">🇨🇦 FR / 🇺🇸 EN</span>
+  <div class="landing-box">
+    <h1 class="landing-title"><span>Gestion</span> et Transition<br>dans le Gymnase</h1>
+    <div class="landing-subtitle" data-i18n="landing_sub">Outil de gestion des transitions</div>
+    <p class="landing-desc" data-i18n="landing_desc">C'est le chaos dans ton gymnase ? Utilise cet outil pour gérer tes transitions comme un pro ! Signaux visuels avec sons, chronomètre de transition, plan interactif du gymnase et gestion des capitaines — tout est là.</p>
+    <div class="landing-features">
+      <span class="landing-feature" data-i18n="lf1">🛑 Signaux visuels + sons</span>
+      <span class="landing-feature" data-i18n="lf2">⏱️ Chrono de transition</span>
+      <span class="landing-feature" data-i18n="lf3">🗺️ Plan du gymnase</span>
+      <span class="landing-feature" data-i18n="lf4">🧢 Capitaines de zone</span>
+      <span class="landing-feature" data-i18n="lf5">🇨🇦 FR / 🇺🇸 EN</span>
+    </div>
+    <button class="landing-enter-btn" onclick="enterApp()" data-i18n="btn_enter">ENTREZ</button>
+    <button id="btn-back-app" class="landing-enter-btn" onclick="enterApp()" style="display:none;margin-top:16px;background:linear-gradient(135deg,#FFD700,#FF9800);box-shadow:0 6px 30px rgba(255,215,0,0.4);font-size:clamp(1rem,2.5vw,1.3rem);" data-i18n="btn_back_app">RETOUR À L'APPLICATION</button>
   </div>
-  <button class="landing-enter-btn" onclick="enterApp()" data-i18n="btn_enter">ENTREZ</button>
-  <button id="btn-back-app" class="landing-enter-btn" onclick="enterApp()" style="display:none;margin-top:16px;background:linear-gradient(135deg,#FFD700,#FF9800);box-shadow:0 6px 30px rgba(255,215,0,0.4);font-size:clamp(1rem,2.5vw,1.3rem);" data-i18n="btn_back_app">RETOUR À L'APPLICATION</button>
 </div>
 
 <!-- MAIN APP -->
