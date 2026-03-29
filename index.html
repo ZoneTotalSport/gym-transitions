@@ -25,7 +25,7 @@
 <meta name="twitter:description" content="Outil interactif pour gérer les transitions en éducation physique. Signaux visuels, chronomètre et plan du gymnase.">
 <meta name="twitter:image" content="https://drive.google.com/thumbnail?id=1bGD8OktGPZlmXzz-ylmBWsu2pJPaXzSB&sz=w1200">
 <!-- Mobile theme color -->
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#f0f2f5">
 <!-- Hreflang -->
 <link rel="alternate" hreflang="fr" href="https://gym.zonetotalsport.ca">
 <link rel="alternate" hreflang="en" href="https://gym.zonetotalsport.ca">
@@ -42,8 +42,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: #111111;
-  color: #F0F0F0;
+  background-color: #f0f2f5;
+  color: #1a1a2e;
   font-family: 'Nunito', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
@@ -55,7 +55,7 @@ body::before {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   background: url('img/bg-gymnase.png') center/cover no-repeat fixed;
-  opacity: 0.15;
+  opacity: 0.12;
   z-index: 0;
   pointer-events: none;
 }
@@ -64,7 +64,7 @@ body::after {
   content: '';
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(180deg, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.85) 50%, rgba(17,17,17,0.95) 100%);
+  background: linear-gradient(180deg, rgba(240,242,245,0.88) 0%, rgba(240,242,245,0.82) 50%, rgba(240,242,245,0.9) 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -73,7 +73,7 @@ body::after {
 #loading-screen {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: #111111;
+  background: #f0f2f5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,8 +84,8 @@ body::after {
 #loading-screen.fade-out { opacity: 0; pointer-events: none; }
 .loader-spinner {
   width: 60px; height: 60px;
-  border: 4px solid rgba(0,229,255,0.2);
-  border-top: 4px solid #00E5FF;
+  border: 4px solid rgba(0,150,199,0.2);
+  border-top: 4px solid #0096C7;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 20px;
@@ -94,7 +94,7 @@ body::after {
 .loader-text {
   font-family: 'Fredoka', sans-serif;
   font-size: 1.2rem;
-  color: #00E5FF;
+  color: #0096C7;
   letter-spacing: 2px;
 }
 
@@ -113,7 +113,7 @@ body::after {
 .landing-mascot {
   width: clamp(250px, 50vw, 450px);
   height: auto;
-  filter: drop-shadow(0 8px 30px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 8px 30px rgba(0,0,0,0.2));
   margin-bottom: 30px;
   animation: landingBounce 3s ease-in-out infinite;
 }
@@ -125,15 +125,15 @@ body::after {
   font-family: 'Fredoka', sans-serif;
   font-size: clamp(1.8rem, 5vw, 3rem);
   font-weight: 700;
-  color: #F0F0F0;
+  color: #1a1a2e;
   margin-bottom: 12px;
   line-height: 1.2;
 }
-.landing-title span { color: #00E5FF; }
+.landing-title span { color: #0096C7; }
 .landing-subtitle {
   font-family: 'Fredoka', sans-serif;
   font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-  color: #FFD700;
+  color: #e6a800;
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 24px;
@@ -141,7 +141,7 @@ body::after {
 .landing-desc {
   font-family: 'Nunito', sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.15rem);
-  color: rgba(255,255,255,0.7);
+  color: #555;
   max-width: 600px;
   line-height: 1.8;
   margin-bottom: 20px;
@@ -155,14 +155,14 @@ body::after {
   max-width: 700px;
 }
 .landing-feature {
-  background: rgba(0,229,255,0.08);
-  border: 1px solid rgba(0,229,255,0.2);
+  background: rgba(0,150,199,0.08);
+  border: 1px solid rgba(0,150,199,0.2);
   border-radius: 30px;
   padding: 8px 18px;
   font-family: 'Nunito', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #00E5FF;
+  color: #0096C7;
 }
 .landing-enter-btn {
   font-family: 'Fredoka', sans-serif;
@@ -196,15 +196,15 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-family: 'Fredoka', sans-serif;
   font-size: clamp(1.4rem, 4vw, 2.2rem);
   font-weight: 700;
-  color: #F0F0F0;
+  color: #1a1a2e;
   text-align: center;
   line-height: 1.2;
 }
-.app-title span { color: #00E5FF; }
+.app-title span { color: #0096C7; }
 .app-subtitle {
   font-family: 'Nunito', sans-serif;
   font-size: clamp(0.7rem, 2vw, 0.9rem);
-  color: #aaaaaa;
+  color: #666;
   text-transform: uppercase;
   letter-spacing: 3px;
   text-align: center;
@@ -225,10 +225,10 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(17,17,17,0.92);
+  background: rgba(255,255,255,0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   padding: 12px 16px;
   margin: 0 -16px;
 }
@@ -254,18 +254,18 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-weight: 600;
   padding: 8px 16px;
   border-radius: 30px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
-  color: #aaaaaa;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.04);
+  color: #666;
   cursor: pointer;
   transition: all 0.25s ease;
   letter-spacing: 0.5px;
   white-space: nowrap;
 }
 .nav-tab:hover {
-  background: rgba(0,229,255,0.1);
-  color: #F0F0F0;
-  border-color: rgba(0,229,255,0.3);
+  background: rgba(0,150,199,0.1);
+  color: #1a1a2e;
+  border-color: rgba(0,150,199,0.3);
 }
 .nav-tab.active {
   background: linear-gradient(135deg, #00E5FF, #0096C7);
@@ -289,29 +289,30 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-weight: 600;
   padding: 6px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.08);
-  color: #aaaaaa;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.8);
+  color: #666;
   cursor: pointer;
   transition: all 0.2s;
 }
 .lang-btn.active {
-  background: rgba(0,229,255,0.2);
-  color: #00E5FF;
-  border-color: rgba(0,229,255,0.4);
+  background: rgba(0,150,199,0.15);
+  color: #0096C7;
+  border-color: rgba(0,150,199,0.4);
 }
 
-/* ====== DARK CARDS ====== */
+/* ====== CARDS ====== */
 .dark-card {
-  background: rgba(20,20,20,0.85);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 .dark-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0,229,255,0.08);
+  box-shadow: 0 8px 30px rgba(0,150,199,0.12);
 }
 
 /* ====== SECTION HEADER ====== */
@@ -327,9 +328,9 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-family: 'Fredoka', sans-serif;
   font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 700;
-  color: #F0F0F0;
+  color: #1a1a2e;
 }
-.section-title .accent { color: #00E5FF; }
+.section-title .accent { color: #0096C7; }
 
 /* ====== BUTTONS ====== */
 .btn {
@@ -388,12 +389,12 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 .btn-outline {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #aaaaaa;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: #666;
 }
 .btn-outline:hover {
-  background: rgba(255,255,255,0.05);
-  color: #F0F0F0;
+  background: rgba(0,0,0,0.04);
+  color: #1a1a2e;
 }
 
 /* ====== SIGNAL CARDS ====== */
@@ -403,22 +404,23 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 20px;
 }
 .signal-card {
-  background: rgba(20,20,20,0.85);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .signal-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0,229,255,0.12);
-  border-color: rgba(0,229,255,0.3);
+  box-shadow: 0 8px 30px rgba(0,150,199,0.15);
+  border-color: rgba(0,150,199,0.3);
 }
 .signal-thumb-container {
   width: 100%;
   height: 200px;
-  background: rgba(30,30,30,0.9);
+  background: rgba(245,245,248,0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -431,13 +433,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 .signal-info {
   padding: 16px 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(0,0,0,0.06);
   text-align: center;
 }
 .signal-label {
   font-family: 'Nunito', sans-serif;
   font-size: 0.75rem;
-  color: #aaaaaa;
+  color: #888;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 4px;
@@ -447,18 +449,18 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-size: 1.3rem;
   font-weight: 700;
 }
-.signal-name.clr-red { color: #f44336; }
-.signal-name.clr-dark { color: #F0F0F0; }
-.signal-name.clr-yellow { color: #FFD700; }
-.signal-name.clr-blue { color: #00E5FF; }
-.signal-name.clr-green { color: #4CAF50; }
+.signal-name.clr-red { color: #d32f2f; }
+.signal-name.clr-dark { color: #1a1a2e; }
+.signal-name.clr-yellow { color: #e6a800; }
+.signal-name.clr-blue { color: #0096C7; }
+.signal-name.clr-green { color: #2E7D32; }
 
 .img-fallback {
   width: 100%; height: 200px;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Fredoka', sans-serif;
-  font-size: 1.5rem; color: #aaaaaa;
-  background: rgba(30,30,30,0.9);
+  font-size: 1.5rem; color: #888;
+  background: rgba(245,245,248,0.9);
 }
 
 /* ====== FULLSCREEN SIGNAL ====== */
@@ -573,17 +575,17 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   width: 90px;
   padding: 10px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.06);
-  color: #F0F0F0;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.8);
+  color: #1a1a2e;
   text-align: center;
   outline: none;
 }
 .timer-input:focus {
-  border-color: #00E5FF;
-  box-shadow: 0 0 12px rgba(0,229,255,0.2);
+  border-color: #0096C7;
+  box-shadow: 0 0 12px rgba(0,150,199,0.2);
 }
-.timer-input::placeholder { color: #666; }
+.timer-input::placeholder { color: #999; }
 .timer-controls { display: flex; gap: 12px; }
 
 .records-card { padding: 24px; }
@@ -591,7 +593,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-family: 'Fredoka', sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
-  color: #FFD700;
+  color: #e6a800;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -600,13 +602,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 1rem;
-  color: #F0F0F0;
+  color: #1a1a2e;
 }
-.records-list li span:last-child { color: #00E5FF; }
+.records-list li span:last-child { color: #0096C7; }
 
 /* ====== GYM MAP ====== */
 .gym-floor {
@@ -616,7 +618,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   background-image: url('https://drive.google.com/thumbnail?id=1fHhMH5-3rbHNo0fFSQba84I8eJLlHWjG&sz=w1200');
   background-size: cover;
   background-position: center;
-  border: 3px solid rgba(255,255,255,0.15);
+  border: 3px solid rgba(0,0,0,0.1);
   border-radius: 16px;
   overflow: hidden;
   cursor: crosshair;
@@ -627,8 +629,8 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   flex-wrap: wrap;
   gap: 8px;
   padding: 16px;
-  background: rgba(20,20,20,0.9);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
   border-radius: 20px 20px 0 0;
   justify-content: center;
 }
@@ -638,9 +640,9 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-size: 0.7rem;
   padding: 8px 10px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
-  color: #aaaaaa;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.03);
+  color: #666;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -650,9 +652,9 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 4px;
 }
 .obj-btn:hover {
-  background: rgba(0,229,255,0.1);
-  border-color: rgba(0,229,255,0.3);
-  color: #F0F0F0;
+  background: rgba(0,150,199,0.1);
+  border-color: rgba(0,150,199,0.3);
+  color: #1a1a2e;
 }
 .obj-btn.active {
   background: linear-gradient(135deg, #00E5FF, #0096C7);
@@ -725,7 +727,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 9999;
-  background: #111111;
+  background: #f0f2f5;
   padding: 16px;
   overflow-y: auto;
   border-radius: 0 !important;
@@ -741,8 +743,8 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 16px;
 }
 .role-card {
-  background: rgba(20,20,20,0.85);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
   padding: 24px 16px;
   display: flex;
@@ -750,14 +752,15 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   align-items: center;
   gap: 8px;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .role-card input {
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   background: transparent;
   border: none;
-  border-bottom: 2px solid rgba(0,229,255,0.3);
-  color: #F0F0F0;
+  border-bottom: 2px solid rgba(0,150,199,0.3);
+  color: #1a1a2e;
   text-align: center;
   font-size: 1rem;
   padding: 6px 4px;
@@ -765,11 +768,11 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   width: 100%;
   transition: border-color 0.2s;
 }
-.role-card input:focus { border-bottom-color: #00E5FF; }
+.role-card input:focus { border-bottom-color: #0096C7; }
 .role-card input.role-name {
   font-family: 'Fredoka', sans-serif;
   font-size: 0.85rem;
-  color: #00E5FF;
+  color: #0096C7;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -782,13 +785,14 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   gap: 16px;
 }
 .guide-step {
-  background: rgba(20,20,20,0.85);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
   padding: 24px;
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .guide-num {
   width: 44px; height: 44px;
@@ -811,13 +815,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-family: 'Fredoka', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #00E5FF;
+  color: #0096C7;
   margin-bottom: 6px;
 }
 .guide-content p {
   font-family: 'Nunito', sans-serif;
   font-size: 0.9rem;
-  color: #aaaaaa;
+  color: #555;
   line-height: 1.6;
 }
 
@@ -836,14 +840,15 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 }
 #info-modal.show { display: flex; }
 .info-modal-card {
-  background: rgba(20,20,20,0.95);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.97);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 24px;
   max-width: 600px;
   width: 100%;
   padding: 40px 32px;
   position: relative;
   animation: modalIn 0.3s ease-out;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
 }
 @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .info-modal-close {
@@ -866,13 +871,13 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   font-family: 'Fredoka', sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #00E5FF;
+  color: #0096C7;
   margin-bottom: 12px;
 }
 .info-modal-desc {
   font-family: 'Nunito', sans-serif;
   font-size: 1.05rem;
-  color: #aaaaaa;
+  color: #555;
   line-height: 1.7;
   margin-bottom: 24px;
 }
@@ -935,7 +940,7 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 </div>
 
 <!-- BOUTON ACCUEIL FLOTTANT -->
-<a href="https://zone.zonetotalsport.ca" style="position:fixed;top:16px;left:16px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#00E5FF,#0096C7);color:#fff;font-family:'Luckiest Guy',cursive;font-size:0.9rem;letter-spacing:1px;border-radius:10px;border:2px solid rgba(255,255,255,.3);text-decoration:none;box-shadow:0 3px 12px rgba(0,229,255,.3);">&#x1F3E0; Accueil</a>
+<a href="https://zonetotalsport.ca" style="position:fixed;top:16px;left:16px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#00E5FF,#0096C7);color:#fff;font-family:'Luckiest Guy',cursive;font-size:0.9rem;letter-spacing:1px;border-radius:10px;border:2px solid rgba(255,255,255,.3);text-decoration:none;box-shadow:0 3px 12px rgba(0,229,255,.3);">&#x1F3E0; Accueil</a>
 
 <!-- LANG BUTTONS -->
 <div class="lang-bar">
