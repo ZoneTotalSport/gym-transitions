@@ -98,6 +98,97 @@ body::after {
   letter-spacing: 2px;
 }
 
+/* ====== LANDING PAGE ====== */
+#landing-page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+.landing-mascot {
+  width: clamp(250px, 50vw, 450px);
+  height: auto;
+  filter: drop-shadow(0 8px 30px rgba(0,0,0,0.6));
+  margin-bottom: 30px;
+  animation: landingBounce 3s ease-in-out infinite;
+}
+@keyframes landingBounce {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+.landing-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #F0F0F0;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.landing-title span { color: #00E5FF; }
+.landing-subtitle {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  color: #FFD700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+}
+.landing-desc {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  color: rgba(255,255,255,0.7);
+  max-width: 600px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.landing-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 35px;
+  max-width: 700px;
+}
+.landing-feature {
+  background: rgba(0,229,255,0.08);
+  border: 1px solid rgba(0,229,255,0.2);
+  border-radius: 30px;
+  padding: 8px 18px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #00E5FF;
+}
+.landing-enter-btn {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700;
+  padding: 18px 50px;
+  border-radius: 40px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: linear-gradient(135deg, #00E5FF, #0096C7);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 30px rgba(0,229,255,0.4);
+  transition: all 0.3s;
+  animation: enterPulse 2s ease-in-out infinite;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.landing-enter-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 40px rgba(0,229,255,0.5);
+}
+@keyframes enterPulse {
+  0%, 100% { box-shadow: 0 6px 30px rgba(0,229,255,0.4); }
+  50% { box-shadow: 0 6px 40px rgba(0,229,255,0.6); }
+}
+
 /* ====== TYPOGRAPHY ====== */
 h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
 
@@ -863,8 +954,27 @@ h1, h2, h3, h4 { font-family: 'Fredoka', sans-serif; }
   </div>
 </div>
 
+<!-- BRUIT DE GYMNASE (loop) -->
+<audio id="gym-ambiance" src="bruit-gymnase.mp3" loop preload="auto"></audio>
+
+<!-- LANDING PAGE -->
+<div id="landing-page">
+  <img src="img/bucheron-panique.png" alt="Mr Root en panique dans le gymnase" class="landing-mascot">
+  <h1 class="landing-title"><span>Gestion</span> et Transition<br>dans le Gymnase</h1>
+  <div class="landing-subtitle" data-i18n="landing_sub">Outil de gestion des transitions</div>
+  <p class="landing-desc" data-i18n="landing_desc">C'est le chaos dans ton gymnase ? Utilise cet outil pour gérer tes transitions comme un pro ! Signaux visuels avec sons, chronomètre de transition, plan interactif du gymnase et gestion des capitaines — tout est là.</p>
+  <div class="landing-features">
+    <span class="landing-feature" data-i18n="lf1">🛑 Signaux visuels + sons</span>
+    <span class="landing-feature" data-i18n="lf2">⏱️ Chrono de transition</span>
+    <span class="landing-feature" data-i18n="lf3">🗺️ Plan du gymnase</span>
+    <span class="landing-feature" data-i18n="lf4">🧢 Capitaines de zone</span>
+    <span class="landing-feature" data-i18n="lf5">🇨🇦 FR / 🇺🇸 EN</span>
+  </div>
+  <button class="landing-enter-btn" onclick="enterApp()" data-i18n="btn_enter">ENTREZ</button>
+</div>
+
 <!-- MAIN APP -->
-<div class="app-container">
+<div class="app-container" id="main-app" style="display:none;">
   <!-- HEADER -->
   <header class="app-header">
     <div class="header-inner">
@@ -1177,7 +1287,10 @@ const i18n = {
     guide_step3_title: "PLAN DU GYMNASE", guide_step3_desc: "S\u00e9lectionnez un objet dans la barre (texte, ballon, c\u00f4ne...) puis cliquez sur le plan pour le placer. Glissez-d\u00e9posez pour repositionner.",
     guide_step4_title: "STAFF", guide_step4_desc: "Ajoutez des r\u00f4les pour vos \u00e9l\u00e8ves responsables. Cliquez sur les champs pour les modifier avec les noms de vos \u00e9l\u00e8ves.",
     guide_step5_title: "LANGUE", guide_step5_desc: "Basculez entre Fran\u00e7ais et Anglais gr\u00e2ce aux boutons FR / EN en haut \u00e0 droite.",
-    guide_tip_title: "CONSEIL PRO", guide_tip_desc: "Utilisez le mode PLEIN \u00c9CRAN dans la section ZONES pour projeter le plan du gymnase sur un tableau blanc interactif !"
+    guide_tip_title: "CONSEIL PRO", guide_tip_desc: "Utilisez le mode PLEIN \u00c9CRAN dans la section ZONES pour projeter le plan du gymnase sur un tableau blanc interactif !",
+    landing_sub: "OUTIL DE GESTION DES TRANSITIONS",
+    landing_desc: "C'est le chaos dans ton gymnase ? Utilise cet outil pour g\u00e9rer tes transitions comme un pro ! Signaux visuels avec sons, chronom\u00e8tre de transition, plan interactif du gymnase et gestion des capitaines \u2014 tout est l\u00e0.",
+    lf1: "\u{1F6D1} Signaux visuels + sons", lf2: "\u23F1\uFE0F Chrono de transition", lf3: "\u{1F5FA}\uFE0F Plan du gymnase", lf4: "\u{1F9E2} Capitaines de zone", lf5: "\u{1F1E8}\u{1F1E6} FR / \u{1F1FA}\u{1F1F8} EN"
   },
   en: {
     title: "GYM MANAGEMENT AND TRANSITION",
@@ -1196,15 +1309,53 @@ const i18n = {
     guide_step3_title: "GYM MAP", guide_step3_desc: "Select an object (text, ball, cone...) then click on the map to place it. Drag and drop to reposition.",
     guide_step4_title: "STAFF", guide_step4_desc: "Add roles for your responsible students. Click on the fields to edit with your students' names.",
     guide_step5_title: "LANGUAGE", guide_step5_desc: "Switch between French and English using the FR / EN buttons at the top right.",
-    guide_tip_title: "PRO TIP", guide_tip_desc: "Use FULLSCREEN mode in the ZONES section to project the gym map on an interactive whiteboard!"
+    guide_tip_title: "PRO TIP", guide_tip_desc: "Use FULLSCREEN mode in the ZONES section to project the gym map on an interactive whiteboard!",
+    landing_sub: "TRANSITION MANAGEMENT TOOL",
+    landing_desc: "Chaos in your gym? Use this tool to manage transitions like a pro! Visual signals with sounds, transition timer, interactive gym map and captain management \u2014 everything you need.",
+    lf1: "\u{1F6D1} Visual signals + sounds", lf2: "\u23F1\uFE0F Transition timer", lf3: "\u{1F5FA}\uFE0F Gym map", lf4: "\u{1F9E2} Zone captains", lf5: "\u{1F1E8}\u{1F1E6} FR / \u{1F1FA}\u{1F1F8} EN"
   }
 };
 
+/* ====== GYM AMBIANCE AUDIO ====== */
+var gymAmbiance = null;
+var gymAmbianceWasPlaying = false;
+
+function startGymAmbiance() {
+  gymAmbiance = document.getElementById('gym-ambiance');
+  if (gymAmbiance) {
+    gymAmbiance.volume = 0.4;
+    gymAmbiance.play().catch(function(e) {
+      console.warn("Ambiance autoplay blocked.");
+    });
+  }
+}
+
+function pauseGymAmbiance() {
+  if (gymAmbiance && !gymAmbiance.paused) {
+    gymAmbianceWasPlaying = true;
+    gymAmbiance.pause();
+  }
+}
+
+function resumeGymAmbiance() {
+  if (gymAmbiance && gymAmbianceWasPlaying) {
+    gymAmbianceWasPlaying = false;
+    gymAmbiance.play().catch(function(e) {});
+  }
+}
+
+/* ====== ENTER APP ====== */
+function enterApp() {
+  document.getElementById('landing-page').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  startGymAmbiance();
+}
+
 /* ====== FULLSCREEN SIGNALS ====== */
 function triggerFullscreen(key) {
-  const data = signalData[key];
-  const fs = document.getElementById('fullscreen');
-  const img = document.getElementById('fs-img-char');
+  var data = signalData[key];
+  var fs = document.getElementById('fullscreen');
+  var img = document.getElementById('fs-img-char');
   fs.style.backgroundColor = data.bg;
   img.src = 'https://drive.google.com/thumbnail?id=' + data.id + '&sz=w1200';
   img.style.display = 'block';
@@ -1212,6 +1363,8 @@ function triggerFullscreen(key) {
   document.getElementById('fs-desc').innerText = data[currentLang][1];
   document.getElementById('signal-audio').src = data.sound;
   fs.classList.add('show');
+  // Pause gym ambiance when showing a signal
+  pauseGymAmbiance();
 }
 function playSignalAudio() {
   document.getElementById('signal-audio').play().catch(function(e) {
@@ -1223,6 +1376,8 @@ function hideFullscreen() {
   var audio = document.getElementById('signal-audio');
   audio.pause();
   if (audio.readyState > 0) audio.currentTime = 0;
+  // Resume gym ambiance after closing signal
+  resumeGymAmbiance();
 }
 
 /* ====== INFO MODAL ====== */
