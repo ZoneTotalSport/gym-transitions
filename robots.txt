@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gym.zonetotalsport.ca/sitemap.xml
